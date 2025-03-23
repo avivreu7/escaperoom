@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>חדר בריחה פיקודי</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a1a1a;
+      color: #fff;
+      direction: rtl;
+      text-align: center;
+      padding: 50px;
+    }
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 12px;
+      padding: 40px;
+    }
+    select {
+      font-size: 20px;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>דו"ח אירוע – 06:43</h1>
+    <p>
+      במהלך הלילה אבד הקשר עם כלל סגל הקורס.<br>
+      המשרד נעול. התיקים – נעלמו. הטלפונים – שותקים.<br>
+      המשימה שלכם ברורה: פענחו את הקוד הראשון.
+    </p>
+    <h2>🔒 מנעול קוד</h2>
+    <div id="lock">
+      <select id="d4"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+      <select id="d3"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+      <select id="d2"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+      <select id="d1"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+    </div>
+    <button onclick="checkCode()">פתח את המנעול</button>
+    <p id="message" class="hidden"></p>
+  </div>
+  <script>
+    function checkCode() {
+      const d1 = document.getElementById("d1").value;
+      const d2 = document.getElementById("d2").value;
+      const d3 = document.getElementById("d3").value;
+      const d4 = document.getElementById("d4").value;
+      const message = document.getElementById("message");
+
+      if (!d1 || !d2 || !d3 || !d4) {
+        message.textContent = "יש לבחור את כל הספרות.";
+        message.classList.remove("hidden");
+        message.style.color = "orange";
+        return;
+      }
+
+      const input = d1 + d2 + d3 + d4;
+      if (input === "5193") {
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        setTimeout(() => {
+          window.location.href = "pages/step1-pizzi.html";
+        }, 1800);
+      } else {
+        message.textContent = "הקוד שגוי. נסו שוב.";
+        message.classList.remove("hidden");
+        message.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
