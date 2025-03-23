@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>חידה ראשונה – בדרך לסגל</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      color: #333;
+      direction: rtl;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+      padding: 50px 30px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    strong {
+      color: #c0392b;
+    }
+  </style>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>פתרתם את הקוד בהצלחה</h1>
+    <p>
+      כעת מתחילה החקירה האמיתית. 
+      תצטרכו להגיע ליעד הראשון, אך המקום לא ייחשף בפשטות.
+    </p>
+    <p>
+      <strong>החידה:</strong><br>
+      מדובר על בית קפה קטן מאוד מאוד.<br>
+      שום, פלפל ושמן זית הוא הבעלים.<br>
+      במידה וצריך לתדלק לפני ההגעה למתקן – שווה לעשות זאת ליד...
+    </p>
+      <br><br>
+    
+      <br><br>
+    <button onclick="startQrScanner()" style="padding: 12px 24px; font-size: 16px; background-color: #2980b9; color: white; border: none; border-radius: 8px; cursor: pointer;">
+      סרוק קוד QR להמשך
+    </button>
+    <div id="reader" style="margin-top: 30px;"></div>
+  </div>
+
+  <script>
+    function startQrScanner() {
+      const qrRegion = document.getElementById("reader");
+      qrRegion.innerHTML = "";
+      const qrScanner = new Html5Qrcode("reader");
+
+      qrScanner.start(
+        { facingMode: "environment" },
+        {
+          fps: 10,
+          qrbox: 250
+        },
+        (decodedText, decodedResult) => {
+          if (decodedText.includes("step2-hall.html")) {
+            qrScanner.stop().then(() => {
+              window.location.href = decodedText;
+            });
+          }
+        },
+        (errorMessage) => {
+          // אפשר להוסיף לוג כאן אם צריך
+        }
+      ).catch((err) => {
+        alert("לא ניתן להפעיל את הסורק: " + err);
+      });
+    }
+  </script>
+</body>
+</html>
