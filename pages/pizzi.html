@@ -3,63 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חידת הסדרות המסתוריות - חדר בריחה פיקודי</title>
+    <title>חידת הצופן המבצעי - חדר בריחה פיקודי</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&family=Rubik:wght@300;400;500;700&display=swap');
-        
-        :root {
-            /* Primary color scheme */
-            --primary-bg: #111827;
-            --card-bg: rgba(17, 24, 39, 0.8);
-            --accent-color: #f43f5e;
-            --accent-glow: rgba(244, 63, 94, 0.3);
-            --accent-secondary: #3b82f6;
-            --accent-secondary-glow: rgba(59, 130, 246, 0.3);
-            --text-color: #f8fafc;
-            --text-secondary: #e2e8f0;
-            --success: #10b981;
-            --success-glow: rgba(16, 185, 129, 0.3);
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --chalk-color: rgba(255, 255, 255, 0.95);
-            
-            /* Interactive elements */
-            --transition-fast: 0.2s;
-            --transition-normal: 0.3s;
-            --transition-slow: 0.5s;
-            
-            /* Fonts */
-            --font-primary: 'Rubik', 'Heebo', sans-serif;
-            --font-secondary: 'Heebo', sans-serif;
-            --font-monospace: 'Courier New', monospace;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap');
         
         body {
-            font-family: var(--font-primary);
-            background-color: var(--primary-bg);
-            color: var(--text-color);
-            min-height: 100vh;
+            font-family: 'Heebo', sans-serif;
+            background-color: #111827;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            /* Rich background with subtle patterns */
+            min-height: 100vh;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(244, 63, 94, 0.1) 0%, transparent 50%),
-                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('https://via.placeholder.com/1920x1080/0a1929/223344?text=כיתה');
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
             background-size: cover;
-            background-position: center;
             background-attachment: fixed;
-            position: relative;
         }
         
         /* Grid overlay */
@@ -74,768 +37,625 @@
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
-            pointer-events: none;
             z-index: -1;
-        }
-        
-        /* Subtle noise texture */
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkMBhgDLwn4JAAAAJBJREFUaN7t2TEKw0AMRuGvNuDceRVfK4fInTyC+5iELGmCZZgl7wb/wIMnEG1mZTntjatjx6Q+GteIdO/8TLQRFRONiIjq7MR0CsxIzMgbM9J6RjpXB16STiuN74sQE5Y80SKiZ/tOmvNFiIgx5SOXjx3r+DrVuO7AFSINoZmR1jPSMoTmiBgRMREREREIzcREK+IDZLcJ8XlEf0IAAAAASUVORK5CYII=');
-            opacity: 0.05;
             pointer-events: none;
-            z-index: -1;
         }
         
-        /* Wrapper for central content */
-        .main-wrapper {
-            width: 100%;
-            max-width: 1000px;
-            margin: 30px auto;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* Main container */
         .container {
-            background-color: var(--card-bg);
+            width: 90%;
+            max-width: 800px;
+            background-color: rgba(17, 24, 39, 0.8);
             border-radius: 16px;
-            padding: 40px;
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.2), 
-                0 0 20px var(--accent-glow);
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 
+                        0 0 20px rgba(244, 63, 94, 0.3),
+                        inset 0 0 80px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(244, 63, 94, 0.2);
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 1s ease-out;
-            backdrop-filter: blur(10px);
-            margin-bottom: 30px;
-        }
-        
-        /* Glowing edge effect */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--accent-color), var(--accent-secondary), var(--accent-color), transparent);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-        
-        /* Mission badge */
-        .mission-badge {
-            position: absolute;
-            top: -16px;
-            right: 30px;
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 20;
+            backdrop-filter: blur(5px);
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--text-color);
-            text-shadow: 0 0 10px var(--accent-glow);
-            font-weight: 800;
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+            color: #f8fafc;
             text-align: center;
-            position: relative;
-            display: inline-block;
-            margin-right: auto;
-            margin-left: auto;
-            width: 100%;
-        }
-        
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 25%;
-            width: 50%;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--accent-secondary), transparent);
-        }
-        
-        /* Rich text styles */
-        p {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            margin-bottom: 15px;
-            color: var(--text-secondary);
+            text-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
         }
         
         .mission-brief {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 25px;
+            background-color: rgba(30, 41, 59, 0.7);
+            padding: 20px;
             border-radius: 12px;
-            margin: 25px 0;
-            border-right: 3px solid var(--accent-secondary);
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            border-right: 3px solid #3b82f6;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e2e8f0;
         }
         
         .highlight {
-            color: var(--accent-secondary);
+            color: #3b82f6;
             font-weight: 600;
         }
         
-        /* Advanced blackboard design */
-        .blackboard {
-            background-color: #2a623d;
+        /* חלק הלוח עם החידה */
+        .terminal-screen {
+            background-color: #0f172a;
             border-radius: 12px;
-            padding: 30px;
-            margin: 40px 0;
-            box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.4), 
-                inset 0 0 80px rgba(0, 0, 0, 0.4);
-            position: relative;
-            border: 12px solid #5d4037;
-            transform: perspective(1000px) rotateX(1deg);
-        }
-        
-        .blackboard::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkMBhgDLwn4JAAAAHVJREFUeNrtwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4G9njAABBXwCqQAAAABJRU5ErkJggg==');
-            opacity: 0.04;
-            pointer-events: none;
-        }
-        
-        .chalk-strokes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-        
-        .chalk-stroke {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.2);
-            height: 1px;
-        }
-        
-        .chalk-stroke:nth-child(1) {
-            width: 30%;
-            top: 15%;
-            left: 5%;
-            transform: rotate(1deg);
-        }
-        
-        .chalk-stroke:nth-child(2) {
-            width: 20%;
-            top: 35%;
-            right: 5%;
-            transform: rotate(-1deg);
-        }
-        
-        .chalk-stroke:nth-child(3) {
-            width: 40%;
-            bottom: 25%;
-            left: 30%;
-            transform: rotate(0.5deg);
-        }
-        
-        .board-message {
-            font-family: var(--font-secondary);
-            color: var(--chalk-color);
-            font-size: 1.4rem;
-            line-height: 1.8;
-            text-align: center;
-            font-weight: 500;
-            margin: 20px 0;
-            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
-        }
-        
-        /* Sequence containers with improved style */
-        .sequence-container {
-            margin: 40px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        .sequence {
-            background-color: rgba(255, 255, 255, 0.12);
-            padding: 20px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            color: var(--chalk-color);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
-            transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
-        }
-        
-        .sequence:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                inset 0 0 20px rgba(0, 0, 0, 0.2),
-                0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .sequence-label {
-            font-size: 1.6rem;
-            font-weight: bold;
-            margin-left: 20px;
-            min-width: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-        }
-        
-        .sequence-numbers {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: flex-end; /* Right to left alignment */
-            flex-grow: 1;
-        }
-        
-        .sequence-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            font-size: 1.2rem;
-            transition: all var(--transition-fast) ease;
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-        }
-        
-        .sequence-number:hover {
-            transform: scale(1.1);
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-        
-        .sequence-blank {
-            width: 45px;
-            height: 45px;
-            border: 2px dashed var(--chalk-color);
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-        
-        /* Enhanced solution area */
-        .solution-area {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 30px;
-            margin: 40px 0;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transition: transform var(--transition-normal) ease;
-        }
-        
-        .solution-area:hover {
-            transform: translateY(-5px);
-        }
-        
-        .solution-title {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .solution-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 25%;
-            width: 50%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
-        }
-        
-        .sequence-solution {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
+            padding: 25px;
             margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 
+                        inset 0 0 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 2px solid #334155;
+            font-family: 'Courier New', monospace;
         }
         
-        .solution-item {
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .terminal-title {
+            color: #3b82f6;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        
+        .terminal-status {
+            color: #10b981;
+            font-size: 0.9rem;
+        }
+        
+        .terminal-content {
+            color: #94a3b8;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .cipher-screen {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .cipher-item {
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #334155;
+            position: relative;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+        
+        .cipher-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border-color: #3b82f6;
+        }
+        
+        .cipher-number {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #f43f5e;
+            margin-bottom: 5px;
+        }
+        
+        .cipher-char {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+        
+        .morse-code {
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        
+        .decoder-key {
+            background-color: rgba(30, 41, 59, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 10px;
-            transition: transform var(--transition-normal) ease;
+            border: 1px solid #334155;
         }
         
-        .solution-item:hover {
-            transform: translateY(-5px);
+        .decoder-item {
+            background-color: #0f172a;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            color: #94a3b8;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            border: 1px solid #1e293b;
         }
         
-        .solution-label {
+        /* איזור הזנת התשובה */
+        .answer-area {
+            background-color: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .answer-title {
+            color: #f43f5e;
             font-size: 1.3rem;
             font-weight: 600;
-            color: var(--accent-secondary);
+            margin-bottom: 20px;
         }
         
-        .solution-input {
-            width: 70px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px solid var(--accent-secondary);
-            border-radius: 12px;
-            color: var(--text-color);
-            font-size: 1.6rem;
+        .word-input {
+            width: 350px;
+            max-width: 100%;
+            height: 50px;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            color: #f8fafc;
+            font-size: 1.5rem;
             text-align: center;
             padding: 10px;
-            transition: all var(--transition-normal) ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            direction: rtl;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
         }
         
-        .solution-input:focus {
+        .word-input:focus {
             outline: none;
-            border-color: var(--accent-color);
-            background-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 
-                0 8px 20px rgba(0, 0, 0, 0.2),
-                0 0 15px var(--accent-glow);
-            transform: translateY(-3px);
-        }
-        
-        /* Code interaction area */
-        .code-area {
-            text-align: center;
-            margin-top: 40px;
-            position: relative;
-            padding: 30px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-        }
-        
-        .code-instruction {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: var(--text-secondary);
-        }
-        
-        .order-highlight {
-            display: inline-block;
-            padding: 4px 8px;
-            background-color: rgba(59, 130, 246, 0.2);
-            border-radius: 6px;
-            font-weight: 600;
-            margin: 0 5px;
-            color: var(--accent-secondary);
-        }
-        
-        .code-display {
-            display: flex;
-            justify-content: center;
-            margin: 25px 0;
-            gap: 15px;
-        }
-        
-        .code-digit {
-            width: 60px;
-            height: 70px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px solid var(--accent-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--text-color);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all var(--transition-normal) ease;
-            font-family: var(--font-monospace);
-        }
-        
-        .code-digit.active {
-            background-color: rgba(244, 63, 94, 0.2);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-        
-        .code-input {
-            width: 180px;
-            height: 70px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 3px solid var(--accent-color);
-            border-radius: 15px;
-            color: var(--text-color);
-            font-size: 2rem;
-            text-align: center;
-            letter-spacing: 8px;
-            padding: 10px 15px;
-            margin: 20px 0;
-            transition: all var(--transition-normal) ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            font-family: var(--font-monospace);
-        }
-        
-        .code-input:focus {
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 
-                0 8px 25px rgba(0, 0, 0, 0.3),
-                0 0 20px var(--accent-glow);
-            transform: translateY(-5px);
-        }
-        
-        /* Enhanced buttons */
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 25px;
-            flex-wrap: wrap;
+            border-color: #f43f5e;
+            background-color: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
         }
         
         .button {
+            display: inline-block;
+            background-color: transparent;
+            color: #3b82f6;
             padding: 12px 30px;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all var(--transition-normal) ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            font-family: var(--font-primary);
-        }
-        
-        .button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.2));
-            transform: translateX(-100%);
-            transition: transform var(--transition-normal) ease;
-            z-index: -1;
-        }
-        
-        .button:hover::before {
-            transform: translateX(0);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
         }
         
         .button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #f43f5e;
+            border-color: #f43f5e;
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
         }
         
-        .button:active {
-            transform: translateY(-2px);
-        }
-        
-        .button-primary {
-            background-color: var(--accent-secondary);
-            color: var(--text-color);
-        }
-        
-        .button-secondary {
+        .hint-button {
             background-color: transparent;
-            color: var(--accent-secondary);
-            border: 2px solid var(--accent-secondary);
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            margin-right: 10px;
         }
         
-        .button-secondary:hover {
+        .hint-button:hover {
             background-color: rgba(59, 130, 246, 0.1);
         }
         
-        /* Improved hint system */
-        .hint-panel {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            margin: 30px 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height var(--transition-slow) ease, padding var(--transition-slow) ease, margin var(--transition-slow) ease;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .hint-panel.visible {
-            max-height: 600px;
-            padding: 25px;
-        }
-        
-        .hint-title {
-            color: var(--accent-color);
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .hint-title::before {
-            content: '💡';
-            margin-left: 10px;
-            font-size: 1.5rem;
-        }
-        
-        .hint-content {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-        
-        .hint-item {
-            margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-            border-right: 3px solid var(--accent-secondary);
-            transition: transform var(--transition-normal) ease;
-        }
-        
-        .hint-item:hover {
-            transform: translateX(-5px);
-            background-color: rgba(255, 255, 255, 0.08);
-        }
-        
-        /* Feedback messaage */
         .feedback {
-            margin: 25px 0 0;
-            font-size: 1.3rem;
+            margin-top: 20px;
+            font-size: 1.2rem;
             font-weight: 600;
-            height: 1.8rem;
+            min-height: 1.5rem;
             text-align: center;
-            transition: all var(--transition-normal) ease;
         }
         
         .feedback.error {
-            color: var(--error);
+            color: #ef4444;
         }
         
         .feedback.success {
-            color: var(--success);
+            color: #10b981;
         }
         
-        /* Timer */
+        /* רמזים */
+        .hint-panel {
+            background-color: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 0;
+            margin: 20px 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        
+        .hint-panel.visible {
+            max-height: 500px;
+            padding: 20px;
+        }
+        
+        .hint-title {
+            color: #f43f5e;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .hint-content {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
         .countdown {
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--accent-color);
-            padding: 12px 20px;
+            background-color: rgba(15, 23, 42, 0.8);
+            border: 1px solid #f43f5e;
+            padding: 10px 20px;
             border-radius: 30px;
-            font-family: var(--font-monospace);
-            color: var(--accent-color);
+            font-family: 'Courier New', monospace;
+            color: #f43f5e;
             font-size: 1.2rem;
-            box-shadow: 0 0 15px var(--accent-glow);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
             z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         
-        .countdown::before {
-            content: '⏱️';
-            font-size: 1.1rem;
-        }
-        
-        /* Progress indicator */
-        .progress-indicator {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--accent-secondary);
-            padding: 10px 15px;
-            border-radius: 30px;
-            color: var(--text-color);
-            font-size: 1rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .progress-step {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .progress-step.active {
-            background-color: var(--accent-secondary);
-            box-shadow: 0 0 10px var(--accent-secondary-glow);
-        }
-        
-        .progress-step.completed {
-            background-color: var(--success);
-            box-shadow: 0 0 10px var(--success-glow);
-        }
-        
-        /* Modal success overlay */
-        .success-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity var(--transition-normal) ease;
-        }
-        
-        .success-modal.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        
-        .modal-content {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 40px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 0 30px var(--success-glow);
-            border: 2px solid var(--success);
-            transform: scale(0.8);
-            transition: transform var(--transition-normal) ease;
-        }
-        
-        .success-modal.visible .modal-content {
-            transform: scale(1);
-        }
-        
-        .success-title {
-            font-size: 2rem;
-            color: var(--success);
-            margin-bottom: 20px;
-        }
-        
-        .success-message {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        
-        .success-code {
-            font-size: 3rem;
-            font-family: var(--font-monospace);
-            color: var(--success);
+        .note-card {
+            background-color: #fff8e1;
+            color: #3e2723;
+            padding: 20px;
+            border-radius: 8px;
             margin: 20px 0;
-            letter-spacing: 8px;
-            text-shadow: 0 0 15px var(--success-glow);
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: rotate(-1deg);
+            position: relative;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
         }
         
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .note-card::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(244, 63, 94, 0.2);
+            border: 1px solid rgba(244, 63, 94, 0.5);
+            transform: rotate(45deg);
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
-        }
-        
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-        
-        @keyframes correctAnswer {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .correct-answer {
-            animation: correctAnswer 0.5s ease-in-out;
-            border-color: var(--success) !important;
-            box-shadow: 0 0 15px var(--success-glow) !important;
-        }
-        
-        /* Media Queries */
+        /* התאמה למסכים קטנים */
         @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
+                padding: 20px 15px;
+                width: 95%;
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             p {
                 font-size: 1.1rem;
             }
             
-            .sequence-numbers {
-                gap: 10px;
+            .word-input {
+                width: 100%;
             }
             
-            .sequence-number, .sequence-blank {
-                width: 40px;
-                height: 40px;
-                font-size: 1.1rem;
-            }
-            
-            .solution-input {
-                width: 60px;
-                height: 50px;
-            }
-            
-            .code-digit {
-                width: 50px;
-                height: 60px;
-            }
-            
-            .countdown, .progress-indicator {
+            .countdown {
                 position: static;
-                margin: 10px auto;
-                display: inline-flex;
+                margin: 10px auto 20px;
+                display: inline-block;
             }
             
-            .blackboard {
-                padding: 20px 15px;
+            .decoder-key {
+                grid-template-columns: repeat(3, 1fr);
             }
             
-            .board-message {
+            .cipher-item {
+                min-height: 60px;
+                padding: 8px 4px;
+            }
+            
+            .cipher-number {
                 font-size: 1.2rem;
             }
+            
+            .cipher-char {
+                font-size: 1rem;
+            }
+        }
+        
+        /* אנימציות נוספות */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
-    <div class="noise"></div>
-    <div class=
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <h1>חידת הצופן המבצעי</h1>
+        
+        <div class="mission-brief">
+            <p>
+                הגעתם למשרד המבצעים, המקום שבו הסגל תכנן את הפעילות האחרונה. על מסך המחשב הראשי מופיע קובץ פתוח עם מערכת צפנים וקודים.
+            </p>
+            <p>
+                נראה שהסגל השאיר עבורכם מערכת הצפנה מיוחדת. <span class="highlight">עליכם לסדר את התיבות לפי המספרים שלהן מהקטן לגדול, ולגלות מהי מילת המפתח</span> שתפתח את השלב הבא.
+            </p>
+        </div>
+        
+        <div class="note-card">
+            "לחניכי 40... אם מצאתם הודעה זו, סימן שהמבצע כבר בעיצומו. 
+            המפתח למצוא אותנו טמון במשחק האותיות והמספרים. 
+            זכרו - לעיתים המובן מאליו הוא הצופן עצמו..."
+        </div>
+        
+        <div class="terminal-screen">
+            <div class="terminal-header">
+                <div class="terminal-title">CIPHER_SYSTEM_v2.5</div>
+                <div class="terminal-status">ACTIVE :: WAITING FOR INPUT</div>
+            </div>
+            
+            <div class="terminal-content">
+                <p style="color: #3b82f6;">// מודול הצפנה פעיל. סגל המדריכים יצר מחוון תרגום משולב.</p>
+                <p>// אנא בחנו את המספרים והאותיות במערכת המשבצות.</p>
+                <p>// פענחו את הצופן לפי הטכניקה המשולבת.</p>
+                
+                <div class="cipher-screen">
+                    <div class="cipher-item">
+                        <div class="cipher-number">14</div>
+                        <div class="cipher-char">נ</div>
+                    </div>
+                    <div class="cipher-item">
+                        <div class="cipher-number">18</div>
+                        <div class="cipher-char">ה</div>
+                    </div>
+                    <div class="cipher-item">
+                        <div class="cipher-number">6</div>
+                        <div class="cipher-char">פ</div>
+                    </div>
+                    <div class="cipher-item">
+                        <div class="cipher-number">12</div>
+                        <div class="cipher-char">ו</div>
+                    </div>
+                    <div class="cipher-item">
+                        <div class="cipher-number">3</div>
+                        <div class="cipher-char">צ</div>
+                    </div>
+                    <div class="cipher-item">
+                        <div class="cipher-number">8</div>
+                        <div class="cipher-char">ק</div>
+                    </div>
+                </div>
+                
+                <p style="color: #ef4444;">// אזהרה: שלוש נסיונות שגויים יגרמו לנעילת המערכת</p>
+                <p>// רמז מובנה: "האותיות מסודרות בכוונה בסדר הפוך. הסתכלו על המספרים - סדרו אותן מהנמוך לגבוה."</p>
+            </div>
+        </div>
+        
+        <div class="decoder-key">
+            <div class="decoder-item">א = 1</div>
+            <div class="decoder-item">ב = 2</div>
+            <div class="decoder-item">ג = 3</div>
+            <div class="decoder-item">ד = 4</div>
+            <div class="decoder-item">ה = 5</div>
+            <div class="decoder-item">ו = 6</div>
+            <div class="decoder-item">ז = 7</div>
+            <div class="decoder-item">ח = 8</div>
+            <div class="decoder-item">ט = 9</div>
+            <div class="decoder-item">י = 10</div>
+            <div class="decoder-item">כ = 11</div>
+            <div class="decoder-item">ל = 12</div>
+            <div class="decoder-item">מ = 13</div>
+            <div class="decoder-item">נ = 14</div>
+            <div class="decoder-item">ס = 15</div>
+            <div class="decoder-item">ע = 16</div>
+            <div class="decoder-item">פ = 17</div>
+            <div class="decoder-item">צ = 18</div>
+            <div class="decoder-item">ק = 19</div>
+            <div class="decoder-item">ר = 20</div>
+            <div class="decoder-item">ש = 21</div>
+            <div class="decoder-item">ת = 22</div>
+        </div>
+        
+        <div class="answer-area">
+            <div class="answer-title">הזינו את מילת המפתח המוצפנת</div>
+            
+            <input type="text" class="word-input" id="wordInput" placeholder="מילת המפתח">
+            
+            <div>
+                <button class="button" id="checkButton">פענח</button>
+                <button class="hint-button" id="hintButton">רמז</button>
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+        </div>
+        
+        <div class="hint-panel" id="hintPanel">
+            <div class="hint-title">רמזים לפתרון הצופן</div>
+            <div class="hint-content">
+                <p>1. התעלמו מהאותיות שמופיעות ושימו לב רק למספרים.</p>
+                <p>2. סדרו את התיבות לפי סדר המספרים מהנמוך לגבוה: 3, 6, 8, 12, 14, 18</p>
+                <p>3. הביטו באותיות שמתאימות למספרים לפי הסדר הזה: צ, פ, ק, ו, נ, ה</p>
+                <p>4. המילה מסתתרת בארבע האותיות הראשונות - והיא קשורה למערכות הצפנה.</p>
+                <p>5. רמז אחרון: זו מילה בת 4 אותיות המתארת שיטה להסתרת מידע.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ניהול הספירה לאחור
+        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // תצוגת רמזים
+        document.getElementById('hintButton').addEventListener('click', function() {
+            const hintPanel = document.getElementById('hintPanel');
+            hintPanel.classList.toggle('visible');
+            
+            if (hintPanel.classList.contains('visible')) {
+                this.textContent = 'הסתר רמז';
+            } else {
+                this.textContent = 'רמז';
+            }
+        });
+        
+        // מספר ניסיונות
+        let attempts = 0;
+        
+        // בדיקת התשובה
+        document.getElementById('checkButton').addEventListener('click', function() {
+            checkAnswer();
+        });
+        
+        // הוספת אפשרות להגיש תשובה עם Enter
+        document.getElementById('wordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
+        function checkAnswer() {
+            const wordInput = document.getElementById('wordInput').value.trim().toLowerCase();
+            const feedback = document.getElementById('feedback');
+            
+            if (wordInput === '') {
+                feedback.textContent = 'יש להזין תשובה';
+                feedback.className = 'feedback error';
+                return;
+            }
+            
+            // התשובה הנכונה היא "צופן"
+            const correctAnswers = ['צופן', 'הצופן', 'צפן', 'צופנ'];
+            
+            if (correctAnswers.some(answer => wordInput.includes(answer) || answer.includes(wordInput))) {
+                feedback.textContent = 'תשובה נכונה! עוברים לשלב הבא...';
+                feedback.className = 'feedback success';
+                
+                // מעבר לדף הבא אחרי השהייה
+                setTimeout(() => {
+                    window.location.href = 'step1-pizzi.html';
+                }, 2000);
+            } else {
+                attempts++;
+                
+                if (attempts >= 3) {
+                    feedback.textContent = 'מספר נסיונות מקסימלי הושג. טוענים רמז נוסף...';
+                    feedback.className = 'feedback error';
+                    
+                    // הוספת רמז נוסף אחרי 3 נסיונות
+                    setTimeout(() => {
+                        const hintPanel = document.getElementById('hintPanel');
+                        const hintContent = document.querySelector('.hint-content');
+                        
+                        if (!hintPanel.classList.contains('visible')) {
+                            document.getElementById('hintButton').click();
+                        }
+                        
+                        const finalHint = document.createElement('p');
+                        finalHint.innerHTML = '<strong>רמז אחרון:</strong> אם תסדרו את האותיות לפי המספרים מהקטן לגדול (3,6,8,12,14,18), ארבע האותיות הראשונות יוצרות את המילה המבוקשת: צ,פ,ק,ו = ?';
+                        finalHint.style.color = '#f43f5e';
+                        hintContent.appendChild(finalHint);
+                        
+                        feedback.textContent = 'נסו שוב עם הרמז החדש';
+                    }, 1500);
+                    
+                    attempts = 0; // איפוס הנסיונות
+                } else {
+                    feedback.textContent = `תשובה שגויה, נסו שנית (נסיון ${attempts} מתוך 3)`;
+                    feedback.className = 'feedback error';
+                }
+                
+                const wordInputElement = document.getElementById('wordInput');
+                wordInputElement.classList.add('shake');
+                setTimeout(() => {
+                    wordInputElement.classList.remove('shake');
+                }, 500);
+            }
+        }
+        
+        // התחלת הספירה לאחור בטעינת העמוד
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCountdown();
+            
+            // מיקוד אוטומטי בשדה הקלט
+            document.getElementById('wordInput').focus();
+            
+            // הוספת אפקט לחיצה על קוביות הצופן
+            const cipherItems = document.querySelectorAll('.cipher-item');
+            cipherItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.backgroundColor = '#2563eb';
+                    this.style.borderColor = '#f43f5e';
+                    
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                        this.style.borderColor = '';
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
