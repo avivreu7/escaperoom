@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חידת הצופן המבצעי - חדר בריחה פיקודי</title>
+    <title>חידת הפתגם החשוב - חדר בריחה פיקודי</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap');
         
@@ -18,54 +18,29 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
-                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
-            background-size: cover;
-            background-attachment: fixed;
-        }
-        
-        /* Grid overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            pointer-events: none;
         }
         
         .container {
             width: 90%;
             max-width: 800px;
-            background-color: rgba(17, 24, 39, 0.8);
-            border-radius: 16px;
+            background-color: #1e293b;
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 
-                        0 0 20px rgba(244, 63, 94, 0.3),
-                        inset 0 0 80px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(244, 63, 94, 0.2);
-            backdrop-filter: blur(5px);
         }
         
         h1 {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
             color: #f8fafc;
             text-align: center;
-            text-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
         }
         
         .mission-brief {
-            background-color: rgba(30, 41, 59, 0.7);
+            background-color: rgba(0, 0, 0, 0.3);
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 8px;
             margin: 20px 0;
             border-right: 3px solid #3b82f6;
         }
@@ -82,120 +57,44 @@
             font-weight: 600;
         }
         
-        /* חלק הלוח עם החידה */
-        .terminal-screen {
-            background-color: #0f172a;
-            border-radius: 12px;
+        /* חלק החידה */
+        .riddle-section {
+            background-color: #2a623d;
+            border-radius: 8px;
             padding: 25px;
             margin: 30px 0;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 
                         inset 0 0 80px rgba(0, 0, 0, 0.3);
             position: relative;
-            border: 2px solid #334155;
-            font-family: 'Courier New', monospace;
+            border: 10px solid #5d4037;
         }
         
-        .terminal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .riddle-title {
+            color: #f8fafc;
+            font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
-        }
-        
-        .terminal-title {
-            color: #3b82f6;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-        }
-        
-        .terminal-status {
-            color: #10b981;
-            font-size: 0.9rem;
-        }
-        
-        .terminal-content {
-            color: #94a3b8;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        
-        .cipher-screen {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-            gap: 15px;
-            margin: 25px 0;
-        }
-        
-        .cipher-item {
-            background-color: #1e293b;
-            border-radius: 8px;
-            padding: 12px 8px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid #334155;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 80px;
         }
         
-        .cipher-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            border-color: #3b82f6;
-        }
-        
-        .cipher-number {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #f43f5e;
-            margin-bottom: 5px;
-        }
-        
-        .cipher-char {
-            font-size: 1.2rem;
-            color: #e2e8f0;
-            font-weight: 500;
-        }
-        
-        .morse-code {
-            margin-top: 5px;
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-        
-        .decoder-key {
-            background-color: rgba(30, 41, 59, 0.7);
-            border-radius: 8px;
-            padding: 20px;
+        .riddle-clues {
             margin: 30px 0;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            border: 1px solid #334155;
         }
         
-        .decoder-item {
-            background-color: #0f172a;
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-            color: #94a3b8;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
-            border: 1px solid #1e293b;
+        .riddle-clue {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
         }
         
         /* איזור הזנת התשובה */
         .answer-area {
-            background-color: rgba(30, 41, 59, 0.7);
-            border-radius: 12px;
-            padding: 25px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
             margin: 30px 0;
             text-align: center;
         }
@@ -208,10 +107,9 @@
         }
         
         .word-input {
-            width: 350px;
-            max-width: 100%;
+            width: 250px;
             height: 50px;
-            background-color: rgba(15, 23, 42, 0.6);
+            background-color: rgba(255, 255, 255, 0.1);
             border: 2px solid #3b82f6;
             border-radius: 8px;
             color: #f8fafc;
@@ -219,37 +117,33 @@
             text-align: center;
             padding: 10px;
             direction: rtl;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
         }
         
         .word-input:focus {
             outline: none;
             border-color: #f43f5e;
-            background-color: rgba(15, 23, 42, 0.8);
+            background-color: rgba(255, 255, 255, 0.15);
             box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
         }
         
         .button {
             display: inline-block;
-            background-color: transparent;
-            color: #3b82f6;
+            background-color: #3b82f6;
+            color: #f8fafc;
             padding: 12px 30px;
-            border: 2px solid #3b82f6;
+            border: none;
             border-radius: 8px;
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 20px;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
         }
         
         .button:hover {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #f43f5e;
-            border-color: #f43f5e;
-            box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
+            background-color: #f43f5e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .hint-button {
@@ -287,8 +181,8 @@
         
         /* רמזים */
         .hint-panel {
-            background-color: rgba(30, 41, 59, 0.7);
-            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
             padding: 0;
             margin: 20px 0;
             max-height: 0;
@@ -318,7 +212,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: rgba(15, 23, 42, 0.8);
+            background-color: rgba(0, 0, 0, 0.7);
             border: 1px solid #f43f5e;
             padding: 10px 20px;
             border-radius: 30px;
@@ -327,34 +221,6 @@
             font-size: 1.2rem;
             box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
             z-index: 100;
-        }
-        
-        .note-card {
-            background-color: #fff8e1;
-            color: #3e2723;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transform: rotate(-1deg);
-            position: relative;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.5;
-        }
-        
-        .note-card::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            background-color: rgba(244, 63, 94, 0.2);
-            border: 1px solid rgba(244, 63, 94, 0.5);
-            transform: rotate(45deg);
         }
         
         /* התאמה למסכים קטנים */
@@ -373,7 +239,8 @@
             }
             
             .word-input {
-                width: 100%;
+                width: 80%;
+                max-width: 250px;
             }
             
             .countdown {
@@ -381,40 +248,16 @@
                 margin: 10px auto 20px;
                 display: inline-block;
             }
-            
-            .decoder-key {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .cipher-item {
-                min-height: 60px;
-                padding: 8px 4px;
-            }
-            
-            .cipher-number {
-                font-size: 1.2rem;
-            }
-            
-            .cipher-char {
-                font-size: 1rem;
-            }
-        }
-        
-        /* אנימציות נוספות */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
         
         .shake {
             animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
     </style>
 </head>
@@ -422,98 +265,45 @@
     <div class="countdown" id="countdown">02:00:00</div>
     
     <div class="container">
-        <h1>חידת הצופן המבצעי</h1>
+        <h1>חידת הפתגם החשוב</h1>
         
         <div class="mission-brief">
             <p>
-                הגעתם למשרד המבצעים, המקום שבו הסגל תכנן את הפעילות האחרונה. על מסך המחשב הראשי מופיע קובץ פתוח עם מערכת צפנים וקודים.
+                הגעתם לכיתה בה הסגל השאיר עבורכם רמזים. על הלוח נמצאת חידה שעליכם לפתור.
             </p>
             <p>
-                נראה שהסגל השאיר עבורכם מערכת הצפנה מיוחדת. <span class="highlight">עליכם לסדר את התיבות לפי המספרים שלהן מהקטן לגדול, ולגלות מהי מילת המפתח</span> שתפתח את השלב הבא.
+                הפתרון יהיה פתגם עתיק המורכב משתי מילים, אשר יוביל אתכם לשלב הבא.
             </p>
         </div>
         
-        <div class="note-card">
-            "לחניכי 40... אם מצאתם הודעה זו, סימן שהמבצע כבר בעיצומו. 
-            המפתח למצוא אותנו טמון במשחק האותיות והמספרים. 
-            זכרו - לעיתים המובן מאליו הוא הצופן עצמו..."
-        </div>
-        
-        <div class="terminal-screen">
-            <div class="terminal-header">
-                <div class="terminal-title">CIPHER_SYSTEM_v2.5</div>
-                <div class="terminal-status">ACTIVE :: WAITING FOR INPUT</div>
+        <div class="riddle-section">
+            <div class="riddle-title">
+                השלימו את הפתגם העתיק
             </div>
             
-            <div class="terminal-content">
-                <p style="color: #3b82f6;">// מודול הצפנה פעיל. סגל המדריכים יצר מחוון תרגום משולב.</p>
-                <p>// אנא בחנו את המספרים והאותיות במערכת המשבצות.</p>
-                <p>// פענחו את הצופן לפי הטכניקה המשולבת.</p>
-                
-                <div class="cipher-screen">
-                    <div class="cipher-item">
-                        <div class="cipher-number">14</div>
-                        <div class="cipher-char">נ</div>
-                    </div>
-                    <div class="cipher-item">
-                        <div class="cipher-number">18</div>
-                        <div class="cipher-char">ה</div>
-                    </div>
-                    <div class="cipher-item">
-                        <div class="cipher-number">6</div>
-                        <div class="cipher-char">פ</div>
-                    </div>
-                    <div class="cipher-item">
-                        <div class="cipher-number">12</div>
-                        <div class="cipher-char">ו</div>
-                    </div>
-                    <div class="cipher-item">
-                        <div class="cipher-number">3</div>
-                        <div class="cipher-char">צ</div>
-                    </div>
-                    <div class="cipher-item">
-                        <div class="cipher-number">8</div>
-                        <div class="cipher-char">ק</div>
-                    </div>
+            <div class="riddle-clues">
+                <div class="riddle-clue">
+                    1. "הנימוסים וההתנהגות הטובה קודמים ללימוד התורה" - אמר רבי עקיבא
                 </div>
-                
-                <p style="color: #ef4444;">// אזהרה: שלוש נסיונות שגויים יגרמו לנעילת המערכת</p>
-                <p>// רמז מובנה: "האותיות מסודרות בכוונה בסדר הפוך. הסתכלו על המספרים - סדרו אותן מהנמוך לגבוה."</p>
+                <div class="riddle-clue">
+                    2. מילה ראשונה: נתיב או נתיבה, כביש או שביל שהולכים בו
+                </div>
+                <div class="riddle-clue">
+                    3. מילה שנייה: מקום יישוב, אדמה, מדינה
+                </div>
+                <div class="riddle-clue">
+                    4. צירוף שתי המילים יוצר ביטוי המתאר התנהגות ראויה וכבוד לזולת
+                </div>
             </div>
-        </div>
-        
-        <div class="decoder-key">
-            <div class="decoder-item">א = 1</div>
-            <div class="decoder-item">ב = 2</div>
-            <div class="decoder-item">ג = 3</div>
-            <div class="decoder-item">ד = 4</div>
-            <div class="decoder-item">ה = 5</div>
-            <div class="decoder-item">ו = 6</div>
-            <div class="decoder-item">ז = 7</div>
-            <div class="decoder-item">ח = 8</div>
-            <div class="decoder-item">ט = 9</div>
-            <div class="decoder-item">י = 10</div>
-            <div class="decoder-item">כ = 11</div>
-            <div class="decoder-item">ל = 12</div>
-            <div class="decoder-item">מ = 13</div>
-            <div class="decoder-item">נ = 14</div>
-            <div class="decoder-item">ס = 15</div>
-            <div class="decoder-item">ע = 16</div>
-            <div class="decoder-item">פ = 17</div>
-            <div class="decoder-item">צ = 18</div>
-            <div class="decoder-item">ק = 19</div>
-            <div class="decoder-item">ר = 20</div>
-            <div class="decoder-item">ש = 21</div>
-            <div class="decoder-item">ת = 22</div>
         </div>
         
         <div class="answer-area">
-            <div class="answer-title">הזינו את מילת המפתח המוצפנת</div>
+            <div class="answer-title">הפתגם החשוב</div>
             
-            <input type="text" class="word-input" id="wordInput" placeholder="מילת המפתח">
+            <input type="text" class="word-input" id="wordInput" placeholder="הזן את התשובה">
             
             <div>
-                <button class="button" id="checkButton">פענח</button>
+                <button class="button" id="checkButton">בדוק תשובה</button>
                 <button class="hint-button" id="hintButton">רמז</button>
             </div>
             
@@ -521,13 +311,13 @@
         </div>
         
         <div class="hint-panel" id="hintPanel">
-            <div class="hint-title">רמזים לפתרון הצופן</div>
+            <div class="hint-title">רמזים לפתרון החידה</div>
             <div class="hint-content">
-                <p>1. התעלמו מהאותיות שמופיעות ושימו לב רק למספרים.</p>
-                <p>2. סדרו את התיבות לפי סדר המספרים מהנמוך לגבוה: 3, 6, 8, 12, 14, 18</p>
-                <p>3. הביטו באותיות שמתאימות למספרים לפי הסדר הזה: צ, פ, ק, ו, נ, ה</p>
-                <p>4. המילה מסתתרת בארבע האותיות הראשונות - והיא קשורה למערכות הצפנה.</p>
-                <p>5. רמז אחרון: זו מילה בת 4 אותיות המתארת שיטה להסתרת מידע.</p>
+                <p>1. הפתגם מורכב משתי מילים בלבד.</p>
+                <p>2. מילה ראשונה: דבר שהולכים בו (ד__)</p>
+                <p>3. מילה שנייה: המקום שבו אנו חיים (א__)</p>
+                <p>4. זהו פתגם ידוע שמלמד אותנו על חשיבות הכבוד וההתנהגות הטובה.</p>
+                <p>5. רמז אחרון: ד___ א___</p>
             </div>
         </div>
     </div>
@@ -549,6 +339,9 @@
             }
         }
         
+        // התחלת ספירה לאחור מיד
+        updateCountdown();
+        
         // תצוגת רמזים
         document.getElementById('hintButton').addEventListener('click', function() {
             const hintPanel = document.getElementById('hintPanel');
@@ -560,9 +353,6 @@
                 this.textContent = 'רמז';
             }
         });
-        
-        // מספר ניסיונות
-        let attempts = 0;
         
         // בדיקת התשובה
         document.getElementById('checkButton').addEventListener('click', function() {
@@ -586,8 +376,8 @@
                 return;
             }
             
-            // התשובה הנכונה היא "צופן"
-            const correctAnswers = ['צופן', 'הצופן', 'צפן', 'צופנ'];
+            // התשובות הנכונות
+            const correctAnswers = ['דרך ארץ', 'דרכארץ', 'דרך-ארץ', 'דרך ארצ', 'דרכ ארץ', 'דרכארצ'];
             
             if (correctAnswers.some(answer => wordInput.includes(answer) || answer.includes(wordInput))) {
                 feedback.textContent = 'תשובה נכונה! עוברים לשלב הבא...';
@@ -598,34 +388,8 @@
                     window.location.href = 'step1-pizzi.html';
                 }, 2000);
             } else {
-                attempts++;
-                
-                if (attempts >= 3) {
-                    feedback.textContent = 'מספר נסיונות מקסימלי הושג. טוענים רמז נוסף...';
-                    feedback.className = 'feedback error';
-                    
-                    // הוספת רמז נוסף אחרי 3 נסיונות
-                    setTimeout(() => {
-                        const hintPanel = document.getElementById('hintPanel');
-                        const hintContent = document.querySelector('.hint-content');
-                        
-                        if (!hintPanel.classList.contains('visible')) {
-                            document.getElementById('hintButton').click();
-                        }
-                        
-                        const finalHint = document.createElement('p');
-                        finalHint.innerHTML = '<strong>רמז אחרון:</strong> אם תסדרו את האותיות לפי המספרים מהקטן לגדול (3,6,8,12,14,18), ארבע האותיות הראשונות יוצרות את המילה המבוקשת: צ,פ,ק,ו = ?';
-                        finalHint.style.color = '#f43f5e';
-                        hintContent.appendChild(finalHint);
-                        
-                        feedback.textContent = 'נסו שוב עם הרמז החדש';
-                    }, 1500);
-                    
-                    attempts = 0; // איפוס הנסיונות
-                } else {
-                    feedback.textContent = `תשובה שגויה, נסו שנית (נסיון ${attempts} מתוך 3)`;
-                    feedback.className = 'feedback error';
-                }
+                feedback.textContent = 'תשובה שגויה, נסו שנית';
+                feedback.className = 'feedback error';
                 
                 const wordInputElement = document.getElementById('wordInput');
                 wordInputElement.classList.add('shake');
@@ -635,26 +399,9 @@
             }
         }
         
-        // התחלת הספירה לאחור בטעינת העמוד
+        // מיקוד אוטומטי בשדה הקלט
         document.addEventListener('DOMContentLoaded', function() {
-            updateCountdown();
-            
-            // מיקוד אוטומטי בשדה הקלט
             document.getElementById('wordInput').focus();
-            
-            // הוספת אפקט לחיצה על קוביות הצופן
-            const cipherItems = document.querySelectorAll('.cipher-item');
-            cipherItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    this.style.backgroundColor = '#2563eb';
-                    this.style.borderColor = '#f43f5e';
-                    
-                    setTimeout(() => {
-                        this.style.backgroundColor = '';
-                        this.style.borderColor = '';
-                    }, 500);
-                });
-            });
         });
     </script>
 </body>
