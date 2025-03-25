@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מבצע "אבידה" - חדר בריחה פיקודי</title>
+    <title>מבצע ביצת הפתעה 2 - חדר בריחה פיקודי</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&family=Rubik:wght@300;400;500;700&display=swap');
         
         :root {
-            /* צבעים מאוזנים ונעימים יותר */
+            /* Primary color scheme */
             --primary-bg: #111827;
-            --overlay-bg: rgba(23, 37, 63, 0.9);
+            --card-bg: rgba(17, 24, 39, 0.8);
             --accent-color: #f43f5e;
             --accent-glow: rgba(244, 63, 94, 0.3);
             --accent-secondary: #3b82f6;
             --accent-secondary-glow: rgba(59, 130, 246, 0.3);
             --text-color: #f8fafc;
             --text-secondary: #e2e8f0;
-            --terminal-green: #6ee7b7;
-            --card-bg: rgba(30, 41, 59, 0.8);
             --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.3);
+            --error: #ef4444;
+            --warning: #f59e0b;
         }
         
         * {
@@ -37,8 +38,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            /* רקע מעוצב יותר - גרדיאנט עדין */
+            padding: 20px;
+            /* Rich background with subtle patterns */
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
                 radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
@@ -49,7 +50,7 @@
             padding: 20px;
         }
         
-        /* אפקט רשת עדין */
+        /* Grid overlay */
         body::before {
             content: '';
             position: fixed;
@@ -65,7 +66,7 @@
             pointer-events: none;
         }
         
-        /* רעש סטטי עדין יותר */
+        /* Subtle noise texture */
         .noise {
             position: fixed;
             top: 0;
@@ -74,10 +75,11 @@
             height: 100%;
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkMBhgDLwn4JAAAAJBJREFUaN7t2TEKw0AMRuGvNuDceRVfK4fInTyC+5iELGmCZZgl7wb/wIMnEG1mZTntjatjx6Q+GteIdO/8TLQRFRONiIjq7MR0CsxIzMgbM9J6RjpXB16STiuN74sQE5Y80SKiZ/tOmvNFiIgx5SOXjx3r+DrVuO7AFSINoZmR1jPSMoTmiBgRMREREREIzcREK+IDZLcJ8XlEf0IAAAAASUVORK5CYII=');
             opacity: 0.02;
-            z-index: -1;
             pointer-events: none;
+            z-index: -1;
         }
         
+        /* Main container */
         .container {
             width: 90%;
             max-width: 800px;
@@ -96,7 +98,7 @@
             z-index: 10;
         }
         
-        /* אפקט קו זוהר עדין בראש הקונטיינר */
+        /* Glowing edge effect */
         .container::before {
             content: '';
             position: absolute;
@@ -146,7 +148,7 @@
         
         .title-glitch::before,
         .title-glitch::after {
-            content: "מבצע \"אבידה\"";
+            content: "מבצע ביצת הפתעה 2";
             position: absolute;
             top: 0;
             left: 0;
@@ -312,7 +314,7 @@
         }
         
         .loading-text {
-            color: var(--terminal-green);
+            color: var(--accent-secondary);
             margin-bottom: 20px;
             font-size: 1.1rem;
             font-family: 'Courier New', monospace;
@@ -491,7 +493,7 @@
         
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: var(--terminal-green) }
+            50% { border-color: var(--accent-secondary) }
         }
         
         /* התאמה למובייל */
@@ -532,7 +534,7 @@
     
     <div class="container">
         <div class="alert-banner">סודי ביותר</div>
-        <h1 class="title-glitch">מבצע "אבידה"</h1>
+        <h1 class="title-glitch">מבצע ביצת הפתעה 2</h1>
         <div class="urgent">התראה דחופה</div>
         
         <div class="story">
@@ -645,9 +647,9 @@
                 const progressBar = document.getElementById('loadingProgress');
                 progressBar.style.width = '100%';
                 
-                // מעבר לעמוד הבא אחרי השהייה
+                // מעבר לדף הבא אחרי השהייה
                 setTimeout(() => {
-                    window.location.href = "step1-pizzi.html";
+                    window.location.href = "number-sequence-puzzle.html";
                 }, 3200);
             }
         }
