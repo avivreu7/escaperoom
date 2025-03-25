@@ -1,88 +1,661 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>חדר בריחה פיקודי</title>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #1a1a1a;
-      color: #fff;
-      direction: rtl;
-      text-align: center;
-      padding: 50px;
-    }
-    .container {
-      max-width: 650px;
-      margin: auto;
-      background: rgba(0, 0, 0, 0.75);
-      border-radius: 12px;
-      padding: 40px;
-    }
-    select {
-      font-size: 20px;
-      padding: 10px;
-      margin: 5px;
-      border-radius: 8px;
-    }
-    button {
-      padding: 12px 24px;
-      font-size: 18px;
-      cursor: pointer;
-      background-color: #ffcc00;
-      border: none;
-      border-radius: 8px;
-      margin-top: 20px;
-    }
-    .hidden { display: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מבצע "אבידה" - חדר בריחה פיקודי</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&family=Rubik:wght@300;400;500;700&display=swap');
+        
+        :root {
+            /* צבעים מאוזנים ונעימים יותר */
+            --primary-bg: #111827;
+            --overlay-bg: rgba(23, 37, 63, 0.9);
+            --accent-color: #f43f5e;
+            --accent-glow: rgba(244, 63, 94, 0.3);
+            --accent-secondary: #3b82f6;
+            --accent-secondary-glow: rgba(59, 130, 246, 0.3);
+            --text-color: #f8fafc;
+            --text-secondary: #e2e8f0;
+            --terminal-green: #6ee7b7;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rubik', 'Heebo', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /* רקע מעוצב יותר - גרדיאנט עדין */
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        /* אפקט רשת עדין */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* רעש סטטי עדין יותר */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkMBhgDLwn4JAAAAJBJREFUaN7t2TEKw0AMRuGvNuDceRVfK4fInTyC+5iELGmCZZgl7wb/wIMnEG1mZTntjatjx6Q+GteIdO/8TLQRFRONiIjq7MR0CsxIzMgbM9J6RjpXB16STiuN74sQE5Y80SKiZ/tOmvNFiIgx5SOXjx3r+DrVuO7AFSINoZmR1jPSMoTmiBgRMREREREIzcREK+IDZLcJ8XlEf0IAAAAASUVORK5CYII=');
+            opacity: 0.02;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.2), 
+                0 0 20px var(--accent-glow),
+                inset 0 0 80px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: glitchIn 1.2s ease-out;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+        
+        /* אפקט קו זוהר עדין בראש הקונטיינר */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent-color), var(--accent-secondary), var(--accent-color), transparent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        .alert-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 30px;
+            background-color: var(--accent-color);
+            transform: rotate(-45deg) translate(-70px, 0px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 20;
+            animation: alertPulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow);
+            font-weight: 800;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .title-glitch {
+            position: relative;
+            animation: textGlitch 5s infinite;
+        }
+        
+        .title-glitch::before,
+        .title-glitch::after {
+            content: "מבצע \"אבידה\"";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+        }
+        
+        .title-glitch::before {
+            /* Red shadow */
+            color: var(--accent-color);
+            left: -2px;
+            text-shadow: -1px 0 var(--accent-color);
+            animation: glitchAnimation1 5s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+        
+        .title-glitch::after {
+            /* Blue shadow */
+            color: var(--accent-secondary);
+            left: 2px;
+            text-shadow: 1px 0 var(--accent-secondary);
+            animation: glitchAnimation2 5s infinite;
+            clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        }
+        
+        .urgent {
+            display: inline-block;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-glow);
+            margin: 30px 0;
+            letter-spacing: 1px;
+            animation: urgentPulse 1.5s infinite;
+            text-transform: uppercase;
+            position: relative;
+            background-color: rgba(244, 63, 94, 0.08);
+            border-radius: 4px;
+        }
+        
+        .urgent::before, 
+        .urgent::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .urgent::before {
+            top: -5px;
+            left: -5px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .urgent::after {
+            bottom: -5px;
+            right: -5px;
+            border-top: none;
+            border-left: none;
+        }
+        
+        .story {
+            background-color: rgba(17, 24, 39, 0.5);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 3px solid var(--accent-color);
+            text-align: right;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .story p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .highlight {
+            color: var(--text-color);
+            background: linear-gradient(90deg, transparent, rgba(244, 63, 94, 0.12), transparent);
+            padding: 3px 0;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+            display: inline-block;
+            border-right: 3px solid var(--terminal-green);
+            font-family: 'Courier New', monospace;
+            color: var(--terminal-green);
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent-color);
+            padding: 16px 40px;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--accent-glow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-color: rgba(244, 63, 94, 0.05);
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transition: transform 0.4s ease;
+            transform: scaleX(0);
+            transform-origin: right;
+            z-index: -1;
+        }
+        
+        .button:hover {
+            color: var(--primary-bg);
+            transform: translateY(-3px);
+        }
+        
+        .button:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .button:active {
+            transform: translateY(-1px);
+        }
+        
+        .loading-section {
+            margin-top: 40px;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.5s ease;
+            width: 100%;
+        }
+        
+        .loading-section.visible {
+            height: 100px;
+        }
+        
+        .loading-text {
+            color: var(--terminal-green);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+        }
+        
+        .loading-bar {
+            width: 100%;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .loading-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+            border-radius: 30px;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: width 3s ease;
+        }
+        
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(23, 37, 63, 0.9);
+            border: 1px solid var(--accent-color);
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px var(--accent-glow);
+            z-index: 100;
+            animation: fadeIn 1s ease-out 2s forwards;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .countdown::before {
+            content: '⏱️';
+            font-size: 1.2rem;
+        }
+        
+        /* Animations */
+        @keyframes glitchIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.98) translateY(30px);
+                clip-path: inset(0 0 100% 0);
+            }
+            20% {
+                clip-path: inset(33% 0 66% 0);
+            }
+            60% {
+                clip-path: inset(66% 0 33% 0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                clip-path: inset(0 0 0 0);
+            }
+        }
+        
+        @keyframes urgentPulse {
+            0%, 100% {
+                box-shadow: 0 0 10px var(--accent-glow);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--accent-glow);
+            }
+        }
+        
+        @keyframes alertPulse {
+            0%, 100% {
+                background-color: var(--accent-color);
+            }
+            50% {
+                background-color: #e11d48;
+            }
+        }
+        
+        @keyframes textGlitch {
+            0%, 94%, 100% {
+                transform: skew(0deg);
+            }
+            95% {
+                transform: skew(5deg);
+            }
+            96% {
+                transform: skew(-5deg);
+            }
+            97% {
+                transform: skew(3deg);
+            }
+            98% {
+                transform: skew(-3deg);
+            }
+            99% {
+                transform: skew(1deg);
+            }
+        }
+        
+        @keyframes glitchAnimation1 {
+            0%, 94%, 100% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            }
+            95% {
+                transform: translate(-5px, 2px);
+                clip-path: polygon(0 5%, 100% 5%, 100% 45%, 0 45%);
+            }
+            96% {
+                transform: translate(5px, -2px);
+                clip-path: polygon(0 0%, 100% 0%, 100% 40%, 0 40%);
+            }
+            97% {
+                transform: translate(-3px, 1px);
+                clip-path: polygon(0 10%, 100% 10%, 100% 45%, 0 45%);
+            }
+            98% {
+                transform: translate(3px, -1px);
+                clip-path: polygon(0 5%, 100% 5%, 100% 35%, 0 35%);
+            }
+            99% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            }
+        }
+        
+        @keyframes glitchAnimation2 {
+            0%, 94%, 100% {
+                transform: translate(0);
+                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+            }
+            95% {
+                transform: translate(5px, 2px);
+                clip-path: polygon(0 60%, 100% 60%, 100% 95%, 0 95%);
+            }
+            96% {
+                transform: translate(-5px, -2px);
+                clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+            }
+            97% {
+                transform: translate(3px, 1px);
+                clip-path: polygon(0 60%, 100% 60%, 100% 90%, 0 90%);
+            }
+            98% {
+                transform: translate(-3px, -1px);
+                clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+            }
+            99% {
+                transform: translate(0);
+                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--terminal-green) }
+        }
+        
+        /* התאמה למובייל */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .urgent {
+                font-size: 1.2rem;
+                padding: 8px 15px;
+            }
+            
+            .button {
+                padding: 14px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .countdown {
+                position: static;
+                margin: 10px auto;
+                display: inline-block;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>דו"ח אירוע – 06:43</h1>
-    <p>
-      במהלך הלילה אבד הקשר עם כלל סגל הקורס.<br>
-      המשרד נעול. התיקים – נעלמו. הטלפונים – שותקים.<br>
-      המשימה שלכם ברורה: פענחו את הקוד הראשון.
-    </p>
-    <h2>🔒 מנעול קוד</h2>
-    <div id="lock">
-      <select id="d4"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
-      <select id="d3"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
-      <select id="d2"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
-      <select id="d1"><option value="" disabled selected>בחר</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+    <div class="noise"></div>
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <div class="alert-banner">סודי ביותר</div>
+        <h1 class="title-glitch">מבצע "אבידה"</h1>
+        <div class="urgent">התראה דחופה</div>
+        
+        <div class="story">
+            <p>
+                <span class="highlight">שעה 04:30</span> - אחרון אנשי הסגל נצפה עוזב את חדר המבצעים.
+            </p>
+            <p>
+                <span class="highlight">שעה 06:15</span> - קריאות החירום לכלל בעלי התפקידים נותרו ללא מענה.
+            </p>
+            <p>
+                <span class="highlight">שעה 07:45</span> - כוח סיור שהגיע למשרדי הסגל מצא את המקום נעול וריק.
+                <br>על הדלת נמצא פתק, ועל מסך המחשב הוקפא קובץ תמונה מוצפן.
+            </p>
+        </div>
+        
+        <p>
+            אתם חניכי מחזור <strong>40</strong>, <strong>הקבוצה היחידה</strong> שיכולה למצוא את הסגל הנעדר.
+            <br>בידיכם מפתחות הידע לפענח את החידות שהושארו מאחור.
+        </p>
+        <p>
+            ייתכן שהסגל במצוקה. ייתכן שזה מבחן עבורכם.
+            <br>הזמן דוחק. הספירה לאחור החלה.
+        </p>
+        
+        <div class="loading-section" id="loadingSection">
+            <div class="loading-text">
+                <span class="typewriter" id="terminalText"></span>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+        </div>
+        
+        <button class="button" id="startButton" onclick="startMission()">התחל מבצע</button>
     </div>
-    <button onclick="checkCode()">פתח את המנעול</button>
-    <p id="message" class="hidden"></p>
-  </div>
-  <script>
-    function checkCode() {
-      const d1 = document.getElementById("d1").value;
-      const d2 = document.getElementById("d2").value;
-      const d3 = document.getElementById("d3").value;
-      const d4 = document.getElementById("d4").value;
-      const message = document.getElementById("message");
 
-      if (!d1 || !d2 || !d3 || !d4) {
-        message.textContent = "יש לבחור את כל הספרות.";
-        message.classList.remove("hidden");
-        message.style.color = "orange";
-        return;
-      }
-
-      const input = d1 + d2 + d3 + d4;
-      if (input === "5193") {
-        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-        setTimeout(() => {
-          window.location.href = "pages/step1-pizzi.html";
-        }, 1800);
-      } else {
-        message.textContent = "הקוד שגוי. נסו שוב.";
-        message.classList.remove("hidden");
-        message.style.color = "red";
-      }
-    }
-  </script>
+    <script>
+        // אפקט שמדמה צמצום זמן - שעתיים
+        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // אפקט כתיבה במסוף
+        const terminalMessages = [
+            "מאמת הרשאות גישה...",
+            "מאתחל פרוטוקול חירום...",
+            "מחפש נקודות קצה בשטח...",
+            "גישה אושרה. מעבד מידע...",
+            "אפיון רמזים ראשוניים הושלם.",
+            "מטעין מפת פעולה..."
+        ];
+        
+        function typeWriter(text, i, elementId, onComplete) {
+            const element = document.getElementById(elementId);
+            
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                setTimeout(function() {
+                    typeWriter(text, i + 1, elementId, onComplete);
+                }, 50);
+            } else if (onComplete) {
+                setTimeout(onComplete, 500);
+            }
+        }
+        
+        // התחלת המשימה
+        function startMission() {
+            // הסתרת כפתור ההתחלה
+            document.getElementById('startButton').style.display = 'none';
+            
+            // הצגת אזור הטעינה
+            const loadingSection = document.getElementById('loadingSection');
+            loadingSection.classList.add('visible');
+            
+            let messageIndex = 0;
+            const terminalText = document.getElementById('terminalText');
+            
+            // הצג הודעות טרמינל בזו אחר זו
+            function showNextMessage() {
+                if (messageIndex < terminalMessages.length) {
+                    terminalText.textContent = '';
+                    typeWriter(terminalMessages[messageIndex], 0, 'terminalText', () => {
+                        messageIndex++;
+                        if (messageIndex < terminalMessages.length) {
+                            setTimeout(showNextMessage, 800);
+                        } else {
+                            // כל ההודעות הוצגו, מתחיל טעינה
+                            startProgressBar();
+                        }
+                    });
+                }
+            }
+            
+            // הצג את ההודעה הראשונה
+            showNextMessage();
+            
+            // פונקציה להתחלת מד ההתקדמות
+            function startProgressBar() {
+                const progressBar = document.getElementById('loadingProgress');
+                progressBar.style.width = '100%';
+                
+                // מעבר לעמוד הבא אחרי השהייה
+                setTimeout(() => {
+                    window.location.href = "step1-pizzi.html";
+                }, 3200);
+            }
+        }
+        
+        // התחלת ספירה לאחור עם טעינת העמוד
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCountdown();
+        });
+    </script>
 </body>
 </html>
