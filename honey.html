@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חלב ודבש - החידה הבאה</title>
+    <title>חלב ודבש - משימה מבצעית</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap');
         
@@ -19,8 +19,26 @@
             justify-content: center;
             min-height: 100vh;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(247, 183, 51, 0.1) 0%, transparent 70%),
-                radial-gradient(circle at 90% 80%, rgba(252, 74, 26, 0.1) 0%, transparent 70%);
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        /* פס רשת בשביל אפקט פיקודי */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
         }
         
         .container {
@@ -29,11 +47,12 @@
             background-color: #1e293b;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(247, 183, 51, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(244, 63, 94, 0.2);
             position: relative;
         }
         
+        /* פס אדום עליון - מעין "סיווג" */
         .container::before {
             content: '';
             position: absolute;
@@ -41,17 +60,48 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(to right, transparent, #f7b733, #fc4a1a, #f7b733, transparent);
+            background: linear-gradient(to right, transparent, #f43f5e, #3b82f6, #f43f5e, transparent);
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
+        }
+        
+        /* פינה מסווגת בפינה עליונה */
+        .classified {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 180px;
+            height: 30px;
+            background-color: #f43f5e;
+            transform: rotate(-45deg) translate(-65px, 0px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            color: #fff;
+            letter-spacing: 1px;
+            z-index: 20;
         }
         
         h1 {
             font-size: 2.5rem;
+            margin-bottom: 15px;
             color: #f8fafc;
             text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px rgba(247, 183, 51, 0.3);
+            text-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
         }
         
+        .mission-subtitle {
+            font-size: 1.3rem;
+            color: #3b82f6;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        /* תיבת הודעת הצלחה */
         .success-message {
             background-color: rgba(16, 185, 129, 0.1);
             border: 2px solid #10b981;
@@ -59,7 +109,7 @@
             padding: 20px;
             margin: 20px 0 30px;
             text-align: center;
-            animation: glow 2s infinite alternate;
+            animation: pulse 2s infinite;
         }
         
         .success-icon {
@@ -70,112 +120,141 @@
             animation: bounce 2s infinite;
         }
         
+        /* מסגרת צבאית מסוגננת */
+        .military-frame {
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .military-frame::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid #3b82f6;
+            border-right: 2px solid #3b82f6;
+        }
+        
+        .military-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            border-bottom: 2px solid #3b82f6;
+            border-left: 2px solid #3b82f6;
+        }
+        
+        /* אזור החידה */
         .riddle-container {
-            background-color: rgba(15, 23, 42, 0.7);
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 12px;
             padding: 25px;
             margin: 30px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
         }
         
         .riddle-header {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
+            border-bottom: 1px solid rgba(244, 63, 94, 0.3);
+            padding-bottom: 10px;
         }
         
         .riddle-title {
-            font-size: 1.4rem;
-            color: #f7b733;
+            font-size: 1.3rem;
+            color: #f43f5e;
             font-weight: 600;
             margin-right: 10px;
         }
         
         .riddle-icon {
-            font-size: 2rem;
-            color: #f7b733;
-            margin-left: 15px;
+            font-size: 1.8rem;
+            margin-left: 10px;
         }
         
         .riddle-text {
             font-size: 1.3rem;
             line-height: 1.8;
-            color: #e2e8f0;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #f8fafc;
             text-align: center;
-        }
-        
-        .riddle-text p {
-            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .highlight {
-            color: #f7b733;
+            color: #3b82f6;
             font-weight: 600;
-            padding: 0 3px;
         }
         
-        /* Fluid elements */
-        .fluid-element {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.6;
-            z-index: -1;
+        .warning {
+            color: #f43f5e;
+            font-weight: 600;
         }
         
-        .milk {
-            width: 80px;
-            height: 80px;
-            background-color: rgba(255, 255, 255, 0.2);
-            top: 50px;
-            left: 30px;
-            animation: float 6s infinite ease-in-out;
+        /* סמלי דבש, לחם וחלב */
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
         }
         
-        .honey {
-            width: 100px;
-            height: 100px;
-            background-color: rgba(247, 183, 51, 0.2);
-            bottom: 70px;
-            right: 50px;
-            animation: float 7s infinite ease-in-out reverse;
+        .icon-item {
+            font-size: 3.5rem;
+            animation: float 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
         }
         
-        /* Hint section */
+        .icon-item:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .icon-item:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        /* אזור הרמז */
         .hint-section {
             margin: 30px 0;
             text-align: center;
         }
         
         .hint-button {
-            background-color: #fc4a1a;
+            background-color: #3b82f6;
             color: white;
             border: none;
             padding: 12px 25px;
-            border-radius: 30px;
+            border-radius: 8px;
             font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(252, 74, 26, 0.3);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
         }
         
         .hint-button:hover {
-            background-color: #f7b733;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(247, 183, 51, 0.4);
+            background-color: #f43f5e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.4);
         }
         
         .hint-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease, padding 0.5s ease;
-            background-color: rgba(15, 23, 42, 0.7);
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             margin: 10px 0;
         }
@@ -183,8 +262,8 @@
         .hint-content.visible {
             max-height: 100px;
             padding: 20px;
-            margin: 15px 0;
-            border: 1px solid rgba(252, 74, 26, 0.3);
+            margin-top: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
         
         .hint-text {
@@ -198,47 +277,35 @@
         
         .hint-icon {
             font-size: 1.5rem;
-            color: #f7b733;
+            color: #3b82f6;
         }
         
+        /* שעון ספירה לאחור */
         .countdown {
             position: fixed;
             top: 20px;
             right: 20px;
             background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid #fc4a1a;
+            border: 1px solid #f43f5e;
             padding: 10px 20px;
-            border-radius: 30px;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
-            color: #fc4a1a;
+            color: #f43f5e;
             font-size: 1.2rem;
-            box-shadow: 0 0 15px rgba(252, 74, 26, 0.3);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
             z-index: 100;
         }
         
-        /* Icon animations */
-        .icon-row {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
+        /* אנימציות */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
         }
         
-        .icon-item {
-            font-size: 3rem;
-            filter: drop-shadow(0 0 10px rgba(247, 183, 51, 0.3));
-            animation: bounce 3s infinite;
-        }
-        
-        .icon-item:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-        
-        .icon-item:nth-child(3) {
-            animation-delay: 1s;
-        }
-        
-        /* Animations */
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -248,16 +315,7 @@
             }
         }
         
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            50% {
-                transform: translateY(-20px) scale(1.1);
-            }
-        }
-        
-        @keyframes glow {
+        @keyframes pulse {
             0%, 100% {
                 box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
             }
@@ -266,7 +324,7 @@
             }
         }
         
-        /* Mobile adjustments */
+        /* התאמות למובייל */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
@@ -282,29 +340,36 @@
                 padding: 15px;
             }
             
+            .icon-item {
+                font-size: 2.8rem;
+            }
+            
             .countdown {
                 position: static;
                 margin: 10px auto 20px;
                 display: inline-block;
             }
-            
-            .fluid-element {
-                display: none;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="fluid-element milk"></div>
-    <div class="fluid-element honey"></div>
     <div class="countdown" id="countdown">02:00:00</div>
     
     <div class="container">
+        <div class="classified">סודי ביותר</div>
         <h1>חלב ודבש</h1>
+        <div class="mission-subtitle">משימה מבצעית: שלב הבא</div>
         
         <div class="success-message">
             <div class="success-icon">🎭</div>
             <p style="font-size: 1.3rem; color: #f8fafc;">כל הכבוד! ההצטלמות שלכם התקבלה בהצלחה!</p>
+        </div>
+        
+        <div class="military-frame">
+            <p>
+                <span class="highlight">עדכון מרכז מבצעי:</span> אתם ממשיכים להתקדם בהתאם לתוכנית. 
+                משימה זו הינה קריטית להשגת היעד הסופי.
+            </p>
         </div>
         
         <div class="riddle-container">
@@ -323,6 +388,9 @@
                 <p>
                     המקום פתוח רק למי שיודע לחשוב אחרת, ושם – <span class="highlight">חלב ודבש נפגשים</span>.
                 </p>
+                <p>
+                    <span class="warning">כשאתם מגיעים למקום, חפשו וסרקו את קוד ה-QR כדי להמשיך למשימה הבאה!</span>
+                </p>
             </div>
             
             <div class="icon-row">
@@ -331,51 +399,3 @@
                 <div class="icon-item">🥛</div>
             </div>
         </div>
-        
-        <div class="hint-section">
-            <button class="hint-button" id="hintButton">רוצים רמז?</button>
-            <div class="hint-content" id="hintContent">
-                <div class="hint-text">
-                    <span class="hint-icon">🗺️</span>
-                    תפתחו מפות וחפשו בקרבתכם
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ניהול הספירה לאחור
-        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
-        const countdownElement = document.getElementById('countdown');
-        
-        function updateCountdown() {
-            const hours = Math.floor(timeLeft / 3600);
-            const minutes = Math.floor((timeLeft % 3600) / 60);
-            const seconds = timeLeft % 60;
-            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            
-            if (timeLeft > 0) {
-                timeLeft--;
-                setTimeout(updateCountdown, 1000);
-            }
-        }
-        
-        // התחלת ספירה לאחור
-        updateCountdown();
-        
-        // ניהול כפתור הרמז
-        const hintButton = document.getElementById('hintButton');
-        const hintContent = document.getElementById('hintContent');
-        
-        hintButton.addEventListener('click', function() {
-            hintContent.classList.toggle('visible');
-            
-            if (hintContent.classList.contains('visible')) {
-                hintButton.textContent = 'הסתר רמז';
-            } else {
-                hintButton.textContent = 'רוצים רמז?';
-            }
-        });
-    </script>
-</body>
-</html>
