@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חידת הפתגם החשוב - חדר בריחה פיקודי</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #111827;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #f8fafc;
+            text-align: center;
+        }
+        
+        .mission-brief {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-right: 3px solid #3b82f6;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        
+        .highlight {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        /* חלק החידה */
+        .riddle-section {
+            background-color: #2a623d;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 
+                        inset 0 0 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 10px solid #5d4037;
+        }
+        
+        .riddle-title {
+            color: #f8fafc;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .riddle-clues {
+            margin: 30px 0;
+        }
+        
+        .riddle-clue {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+        }
+        
+        /* איזור הזנת התשובה */
+        .answer-area {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .answer-title {
+            color: #f43f5e;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .word-input {
+            width: 250px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            color: #f8fafc;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 10px;
+            direction: rtl;
+        }
+        
+        .word-input:focus {
+            outline: none;
+            border-color: #f43f5e;
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: #3b82f6;
+            color: #f8fafc;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .button:hover {
+            background-color: #f43f5e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hint-button {
+            background-color: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        
+        .hint-button:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-height: 1.5rem;
+            text-align: center;
+        }
+        
+        .feedback.error {
+            color: #ef4444;
+        }
+        
+        .feedback.success {
+            color: #10b981;
+        }
+        
+        /* רמזים */
+        .hint-panel {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 0;
+            margin: 20px 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        
+        .hint-panel.visible {
+            max-height: 500px;
+            padding: 20px;
+        }
+        
+        .hint-title {
+            color: #f43f5e;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .hint-content {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #f43f5e;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            color: #f43f5e;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+            z-index: 100;
+        }
+        
+        /* התאמה למסכים קטנים */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .word-input {
+                width: 80%;
+                max-width: 250px;
+            }
+            
+            .countdown {
+                position: static;
+                margin: 10px auto 20px;
+                display: inline-block;
+            }
+        }
+        
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <h1>חידת הפתגם החשוב</h1>
+        
+        <div class="mission-brief">
+            <p>
+                הגעתם לכיתה בה הסגל השאיר עבורכם רמזים. על הלוח נמצאת חידה שעליכם לפתור.
+            </p>
+            <p>
+                הפתרון יהיה פתגם עתיק המורכב משתי מילים, אשר יוביל אתכם לשלב הבא.
+            </p>
+        </div>
+        
+        <div class="riddle-section">
+            <div class="riddle-title">
+                השלימו את הפתגם העתיק
+            </div>
+            
+            <div class="riddle-clues">
+                <div class="riddle-clue">
+                    1. "הנימוסים וההתנהגות הטובה קודמים ללימוד התורה" - אמר רבי עקיבא
+                </div>
+                <div class="riddle-clue">
+                    2. מילה ראשונה: נתיב או נתיבה, כביש או שביל שהולכים בו
+                </div>
+                <div class="riddle-clue">
+                    3. מילה שנייה: מקום יישוב, אדמה, מדינה
+                </div>
+                <div class="riddle-clue">
+                    4. צירוף שתי המילים יוצר ביטוי המתאר התנהגות ראויה וכבוד לזולת
+                </div>
+            </div>
+        </div>
+        
+        <div class="answer-area">
+            <div class="answer-title">הפתגם החשוב</div>
+            
+            <input type="text" class="word-input" id="wordInput" placeholder="הזן את התשובה">
+            
+            <div>
+                <button class="button" id="checkButton">בדוק תשובה</button>
+                <button class="hint-button" id="hintButton">רמז</button>
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+        </div>
+        
+        <div class="hint-panel" id="hintPanel">
+            <div class="hint-title">רמזים לפתרון החידה</div>
+            <div class="hint-content">
+                <p>1. הפתגם מורכב משתי מילים בלבד.</p>
+                <p>2. מילה ראשונה: דבר שהולכים בו (ד__)</p>
+                <p>3. מילה שנייה: המקום שבו אנו חיים (א__)</p>
+                <p>4. זהו פתגם ידוע שמלמד אותנו על חשיבות הכבוד וההתנהגות הטובה.</p>
+                <p>5. רמז אחרון: ד___ א___</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ניהול הספירה לאחור
+        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // התחלת ספירה לאחור מיד
+        updateCountdown();
+        
+        // תצוגת רמזים
+        document.getElementById('hintButton').addEventListener('click', function() {
+            const hintPanel = document.getElementById('hintPanel');
+            hintPanel.classList.toggle('visible');
+            
+            if (hintPanel.classList.contains('visible')) {
+                this.textContent = 'הסתר רמז';
+            } else {
+                this.textContent = 'רמז';
+            }
+        });
+        
+        // בדיקת התשובה
+        document.getElementById('checkButton').addEventListener('click', function() {
+            checkAnswer();
+        });
+        
+        // הוספת אפשרות להגיש תשובה עם Enter
+        document.getElementById('wordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
+        function checkAnswer() {
+            const wordInput = document.getElementById('wordInput').value.trim().toLowerCase();
+            const feedback = document.getElementById('feedback');
+            
+            if (wordInput === '') {
+                feedback.textContent = 'יש להזין תשובה';
+                feedback.className = 'feedback error';
+                return;
+            }
+            
+            // התשובות הנכונות
+            const correctAnswers = ['דרך ארץ', 'דרכארץ', 'דרך-ארץ', 'דרך ארצ', 'דרכ ארץ', 'דרכארצ'];
+            
+            if (correctAnswers.some(answer => wordInput.includes(answer) || answer.includes(wordInput))) {
+                feedback.textContent = 'תשובה נכונה! עוברים לשלב הבא...';
+                feedback.className = 'feedback success';
+                
+                // מעבר לדף הבא אחרי השהייה
+                setTimeout(() => {
+                    window.location.href = 'step1-pizzi.html';
+                }, 2000);
+            } else {
+                feedback.textContent = 'תשובה שגויה, נסו שנית';
+                feedback.className = 'feedback error';
+                
+                const wordInputElement = document.getElementById('wordInput');
+                wordInputElement.classList.add('shake');
+                setTimeout(() => {
+                    wordInputElement.classList.remove('shake');
+                }, 500);
+            }
+        }
+        
+        // מיקוד אוטומטי בשדה הקלט
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('wordInput').focus();
+        });
+    </script>
+</body>
+</html>
