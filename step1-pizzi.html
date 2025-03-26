@@ -164,6 +164,44 @@
             z-index: 100;
         }
         
+        /* Safety guidelines box */
+        .safety-box {
+            background-color: rgba(250, 204, 21, 0.1);
+            border: 2px solid #facc15;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            position: relative;
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.2);
+        }
+        
+        .safety-title {
+            color: #facc15;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .safety-guidelines {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .safety-guidelines li {
+            margin-bottom: 12px;
+            padding-right: 22px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .safety-guidelines li:before {
+            content: "⚠️";
+            position: absolute;
+            right: 0;
+            top: 2px;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
@@ -205,52 +243,52 @@
                 כל הכבוד על התקדמותכם עד כה. ניתוח המידע שאספתם מצביע על כך שהסגל יצא מהבסיס למשימה סודית בארבעה מוקדים שונים ברחבי האזור. עלינו להתארגן ולצאת בעקבותיהם.
             </p>
             <p>
-                לטובת משימה זו, חניכי מחזור <span class="highlight">40</span> יתחלקו לארבעה צוותי פעולה. כל צוות יקבל משימה ייחודית וייצא לאתר את אנשי הסגל במוקד המיועד לו.
+                לטובת משימה זו, חניכי מחזור <span class="highlight">40</span> יתחלקו לארבעה צוותי פעולה כמפורט להלן.
             </p>
+        </div>
+        
+        <!-- דגשי בטיחות -->
+        <div class="safety-box">
+            <div class="safety-title">דגשי בטיחות חשובים!</div>
+            <ul class="safety-guidelines">
+                <li>היום הוא <strong>לא תחרות</strong> - סעו בזהירות ובמתינות לאורך כל היום.</li>
+                <li>יש לעצור את הרכב רק במקומות בטוחים ומוסדרים לעצירה.</li>
+                <li>חציית כבישים תתבצע אך ורק במעברי חצייה מסודרים.</li>
+                <li>יש לעמוד ברמזורים אדומים ולכבד את חוקי התנועה בכל עת.</li>
+                <li>בטיחות היא מעל הכל - זכרו שאין משימה שדוחקת את כללי הבטיחות.</li>
+            </ul>
         </div>
         
         <div class="alert-box">
             <div class="alert-title">הנחיות חשובות</div>
             <p>
-                כל צוות יתארגן וייגש לרכב המיועד לו. ברכב, לחצו על הכפתור "קבל משימה" כדי לקבל את הפרטים הייחודיים למשימתכם.
+                כל צוות יתארגן וייגש לרכב המיועד לו.
             </p>
         </div>
         
         <div class="teams-grid">
             <div class="team-card">
                 <div class="team-name">צוות גוטליב</div>
-                <div class="team-description">
-                    אחראים לחיפוש בתחום הצפוני של הבסיס.
-                </div>
             </div>
             
             <div class="team-card">
                 <div class="team-name">צוות נחמיאס</div>
-                <div class="team-description">
-                    אחראים לחיפוש בתחום המזרחי של הבסיס.
-                </div>
             </div>
             
             <div class="team-card">
                 <div class="team-name">צוות כחלון</div>
-                <div class="team-description">
-                    אחראים לחיפוש בתחום הדרומי של הבסיס.
-                </div>
             </div>
             
             <div class="team-card">
                 <div class="team-name">צוות לרון</div>
-                <div class="team-description">
-                    אחראים לחיפוש בתחום המערבי של הבסיס.
-                </div>
             </div>
         </div>
         
         <div class="continue-section">
             <div class="continue-message">
-                חברו לצוותכם, גשו לרכב המיועד ולחצו על הכפתור הבא לקבלת המשימה הייעודית.
+                התחלקו לצוותים והתארגנו ברכבים לפי הצוותים המפורטים למעלה.
             </div>
-            <button class="button" id="continueButton">קבל משימה</button>
+            <button class="button" id="continueButton">המשך</button>
         </div>
     </div>
 
