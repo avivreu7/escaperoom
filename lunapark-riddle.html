@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חקירה מבצעית - היעד השני</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&family=Rubik:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-bg: #111827;
+            --card-bg: #1e293b;
+            --accent-color: #f43f5e;
+            --accent-secondary: #3b82f6;
+            --text-color: #f8fafc;
+            --text-secondary: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rubik', 'Heebo', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        /* Grid overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Glowing edge effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent-color), var(--accent-secondary), var(--accent-color), transparent);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: var(--accent-secondary);
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .mission-brief {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0 30px;
+            border-right: 3px solid var(--accent-secondary);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .highlight {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+        
+        /* Emoji container */
+        .emoji-stage {
+            margin: 40px auto;
+            position: relative;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #172135, #12192a);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 2px 10px rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .emoji-stage::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.7)),
+                linear-gradient(45deg, rgba(244, 63, 94, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .emoji-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .emoji-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            transform-style: preserve-3d;
+        }
+        
+        .emoji {
+            font-size: 5rem;
+            margin: 0 15px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .emoji-1 {
+            animation: bounce 4s ease-in-out infinite;
+        }
+        
+        .emoji-2 {
+            animation: bounce 4s ease-in-out 0.5s infinite;
+        }
+        
+        .emoji-3 {
+            animation: bounce 4s ease-in-out 1s infinite;
+        }
+        
+        .emoji:hover {
+            transform: translateZ(40px) scale(1.2);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+        }
+        
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(244, 63, 94, 0.2), transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        /* Instruction box */
+        .instruction-box {
+            background-color: rgba(59, 130, 246, 0.1);
+            border: 2px dashed var(--accent-secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0 10px;
+            text-align: center;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        .instruction-text {
+            font-size: 1.4rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .instruction-icon {
+            font-size: 2rem;
+            color: var(--accent-secondary);
+        }
+        
+        /* Countdown */
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+            z-index: 100;
+        }
+        
+        /* Light particles */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: particles 10s linear infinite;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0) translateZ(20px);
+            }
+            50% {
+                transform: translateY(-15px) translateZ(20px);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                border-color: var(--accent-secondary);
+                box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+            }
+            50% { 
+                border-color: var(--accent-color);
+                box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
+            }
+        }
+        
+        @keyframes particles {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .emoji {
+                font-size: 4rem;
+            }
+            
+            .emoji-stage {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .emoji-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .instruction-text {
+                font-size: 1.2rem;
+                flex-direction: column;
+            }
+            
+            .countdown {
+                position: static;
+                margin: 10px auto 20px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <h1>המשימה ממשיכה</h1>
+        <div class="subtitle">איתור היעד השני</div>
+        
+        <div class="mission-brief">
+            <p>
+                <span class="highlight">עדכון מרכז המבצעים:</span>
+            </p>
+            <p>
+                מצוין, צוותים! הצלחתם לפענח את המיקום הראשון. לפי המידע שאספנו, אחד מאנשי הסגל השאיר רמז נוסף במיקום הבא שעליכם לאתר.
+            </p>
+        </div>
+        
+        <div class="emoji-stage">
+            <div class="particles-container" id="particlesContainer"></div>
+            <div class="glow"></div>
+            <div class="emoji-container">
+                <div class="emoji-row">
+                    <div class="emoji emoji-1">🎡</div>
+                </div>
+                <div class="emoji-row">
+                    <div class="emoji emoji-2">🎢</div>
+                    <div class="emoji emoji-3">🎠</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instruction-box">
+            <div class="instruction-text">
+                <span class="instruction-icon">📱</span>
+                להמשך הגיעו למקום ומצאו את קוד ה-QR הבא
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ניהול הספירה לאחור
+        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // התחלת ספירה לאחור מיד
+        updateCountdown();
+        
+        // יצירת חלקיקים אקראיים
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // מיקום אקראי
+                const randomX = Math.floor(Math.random() * 100);
+                const randomY = Math.floor(Math.random() * 100);
+                
+                // גודל אקראי
+                const size = Math.floor(Math.random() * 4) + 2;
+                
+                // זמן אנימציה אקראי
+                const duration = Math
