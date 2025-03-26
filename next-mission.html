@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חקירה מבצעית - המיקום הראשון</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&family=Rubik:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-bg: #111827;
+            --card-bg: #1e293b;
+            --accent-color: #f43f5e;
+            --accent-secondary: #3b82f6;
+            --text-color: #f8fafc;
+            --text-secondary: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rubik', 'Heebo', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        /* Grid overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Glowing edge effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent-color), var(--accent-secondary), var(--accent-color), transparent);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: var(--accent-secondary);
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        .mission-brief {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-right: 3px solid var(--accent-secondary);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .highlight {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+        
+        .warning {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        /* Riddle container */
+        .riddle-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .riddle-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .riddle-title {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .riddle-icon {
+            font-size: 1.8rem;
+            margin-left: 10px;
+        }
+        
+        .riddle-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Instruction box */
+        .instruction-box {
+            background-color: rgba(59, 130, 246, 0.1);
+            border: 2px dashed var(--accent-secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        .instruction-text {
+            font-size: 1.4rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .instruction-icon {
+            font-size: 2rem;
+            color: var(--accent-secondary);
+        }
+        
+        /* Countdown */
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+            z-index: 100;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { 
+                border-color: var(--accent-secondary);
+                box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+            }
+            50% { 
+                border-color: var(--accent-color);
+                box-shadow: 0 0 20px rgba(244, 63, 94, 0.4);
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .instruction-text {
+                font-size: 1.2rem;
+                flex-direction: column;
+            }
+            
+            .countdown {
+                position: static;
+                margin: 10px auto 20px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <h1>החקירה המבצעית</h1>
+        <div class="subtitle">איתור היעד הראשון</div>
+        
+        <div class="mission-brief">
+            <p>
+                <span class="highlight">עדכון מרכז המבצעים:</span>
+            </p>
+            <p>
+                צוותים יקרים, כעת מתחילה החקירה האמיתית. עליכם להגיע ליעד הראשון, אך המקום לא ייחשף בפשטות. פענחו את החידה כדי לדעת לאן לנסוע.
+            </p>
+            <p>
+                זכרו: הזמן דוחק. אנשי הסגל עשויים להיות בסכנה. פעלו במהירות אך בתבונה.
+            </p>
+        </div>
+        
+        <div class="riddle-container">
+            <div class="riddle-header">
+                <div class="riddle-icon">🔍</div>
+                <div class="riddle-title">החידה:</div>
+            </div>
+            
+            <div class="riddle-text">
+                מדובר על בית קפה קטן מאוד מאוד. שום, פלפל ושמן זית הוא הבעלים. במידה וצריך לתדלק לפני ההגעה למתקן – שווה לעשות זאת ליד...
+            </div>
+        </div>
+        
+        <div class="instruction-box">
+            <div class="instruction-text">
+                <span class="instruction-icon">📱</span>
+                להמשך חפשו במקום וסרקו את קוד ה-QR בשביל לקבל את החידה הבאה
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ניהול הספירה לאחור
+        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // התחלת ספירה לאחור מיד
+        updateCountdown();
+    </script>
+</body>
+</html>
