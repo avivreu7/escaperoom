@@ -5,169 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>משימה מבצעית - חלוקה לצוותים</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&family=Rubik:wght@300;400;500;700&display=swap');
-        
-        :root {
-            /* Primary color scheme */
-            --primary-bg: #111827;
-            --card-bg: rgba(17, 24, 39, 0.8);
-            --accent-color: #f43f5e;
-            --accent-glow: rgba(244, 63, 94, 0.3);
-            --accent-secondary: #3b82f6;
-            --accent-secondary-glow: rgba(59, 130, 246, 0.3);
-            --text-color: #f8fafc;
-            --text-secondary: #e2e8f0;
-            --success: #10b981;
-            --success-glow: rgba(16, 185, 129, 0.3);
-            --error: #ef4444;
-            --warning: #f59e0b;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap');
         
         body {
-            font-family: 'Rubik', 'Heebo', sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-color);
-            min-height: 100vh;
+            font-family: 'Heebo', sans-serif;
+            background-color: #111827;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            /* Rich background with subtle patterns */
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
-                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
-            background-size: cover;
-            background-attachment: fixed;
-            position: relative;
-            overflow-x: hidden;
-            padding: 20px;
+            min-height: 100vh;
         }
         
-        /* Grid overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        /* Subtle noise texture */
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkMBhgDLwn4JAAAAJBJREFUaN7t2TEKw0AMRuGvNuDceRVfK4fInTyC+5iELGmCZZgl7wb/wIMnEG1mZTntjatjx6Q+GteIdO/8TLQRFRONiIjq7MR0CsxIzMgbM9J6RjpXB16STiuN74sQE5Y80SKiZ/tOmvNFiIgx5SOXjx3r+DrVuO7AFSINoZmR1jPSMoTmiBgRMREREREIzcREK+IDZLcJ8XlEf0IAAAAASUVORK5CYII=');
-            opacity: 0.02;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        /* Main container */
         .container {
             width: 90%;
             max-width: 800px;
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 40px 30px;
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.2), 
-                0 0 20px var(--accent-glow),
-                inset 0 0 80px rgba(0, 0, 0, 0.2);
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(244, 63, 94, 0.2);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-            z-index: 10;
-        }
-        
-        /* Glowing edge effect */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--accent-color), var(--accent-secondary), var(--accent-color), transparent);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-        
-        .alert-banner {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 30px;
-            background-color: var(--accent-color);
-            transform: rotate(-45deg) translate(-70px, 0px);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            font-weight: bold;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            z-index: 20;
-            animation: alertPulse 2s infinite;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
-            color: var(--text-color);
-            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow);
-            font-weight: 800;
-            letter-spacing: 1px;
-            position: relative;
-            display: inline-block;
+            color: #f8fafc;
             text-align: center;
-            width: 100%;
         }
         
         .subtitle {
-            color: var(--accent-secondary);
             font-size: 1.4rem;
+            color: #3b82f6;
             text-align: center;
             margin-bottom: 30px;
-            font-weight: 600;
-            text-shadow: 0 0 10px var(--accent-secondary-glow);
         }
         
         .mission-brief {
-            background-color: rgba(30, 41, 59, 0.7);
+            background-color: rgba(0, 0, 0, 0.3);
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 8px;
             margin: 20px 0;
-            border-right: 3px solid var(--accent-secondary);
+            border-right: 3px solid #3b82f6;
         }
         
         p {
             font-size: 1.2rem;
-            line-height: 1.7;
+            line-height: 1.6;
             margin-bottom: 15px;
-            color: var(--text-secondary);
+            color: #e2e8f0;
         }
         
         .highlight {
-            color: var(--accent-secondary);
+            color: #3b82f6;
             font-weight: 600;
         }
         
@@ -181,68 +74,30 @@
         
         .team-card {
             background-color: rgba(15, 23, 42, 0.7);
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 8px;
+            padding: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--accent-secondary);
+            border: 1px solid #3b82f6;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
         
         .team-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 15px var(--accent-secondary-glow);
-            border-color: var(--accent-color);
-        }
-        
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, var(--accent-secondary), var(--accent-color));
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: #f43f5e;
         }
         
         .team-name {
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 10px;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
+            color: #f8fafc;
         }
-        
-        .team-icon {
-            width: 35px;
-            height: 35px;
-            margin-left: 10px;
-            background-color: var(--accent-secondary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .team-gottlieb .team-icon { background-color: #3b82f6; }
-        .team-nehmias .team-icon { background-color: #10b981; }
-        .team-kahlon .team-icon { background-color: #f59e0b; }
-        .team-laron .team-icon { background-color: #f43f5e; }
         
         .team-description {
             font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-        
-        .team-members {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            opacity: 0.8;
+            color: #e2e8f0;
+            margin-bottom: 10px;
         }
         
         /* Continue button */
@@ -255,124 +110,63 @@
         
         .continue-message {
             font-size: 1.1rem;
-            color: var(--text-color);
+            color: #f8fafc;
             margin-bottom: 20px;
         }
         
         .button {
             display: inline-block;
-            background-color: transparent;
-            color: var(--accent-color);
-            padding: 14px 40px;
-            border: 2px solid var(--accent-color);
+            background-color: #3b82f6;
+            color: #f8fafc;
+            padding: 12px 30px;
+            border: none;
             border-radius: 8px;
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 15px var(--accent-glow);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background-color: rgba(244, 63, 94, 0.05);
-            z-index: 10;
-        }
-        
-        .button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--accent-color);
-            transition: transform 0.4s ease;
-            transform: scaleX(0);
-            transform-origin: right;
-            z-index: -1;
+            margin-top: 20px;
         }
         
         .button:hover {
-            color: var(--primary-bg);
+            background-color: #f43f5e;
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .button:hover::before {
-            transform: scaleX(1);
-            transform-origin: left;
+        .alert-box {
+            background-color: rgba(244, 63, 94, 0.1);
+            border: 1px solid #f43f5e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .alert-title {
+            color: #f43f5e;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
         
         .countdown {
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: rgba(23, 37, 63, 0.9);
-            border: 1px solid var(--accent-color);
-            padding: 12px 18px;
-            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #f43f5e;
+            padding: 10px 20px;
+            border-radius: 30px;
             font-family: 'Courier New', monospace;
-            color: var(--accent-color);
+            color: #f43f5e;
             font-size: 1.2rem;
-            box-shadow: 0 0 15px var(--accent-glow);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
             z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         
-        .countdown::before {
-            content: '⏱️';
-            font-size: 1.2rem;
-        }
-        
-        .urgent-alert {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--error);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 25px 0;
-            position: relative;
-            animation: pulseBorder 1.5s infinite;
-        }
-        
-        .urgent-title {
-            color: var(--error);
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .urgent-title::before {
-            content: '⚠️';
-        }
-        
-        /* Animations */
-        @keyframes alertPulse {
-            0%, 100% {
-                background-color: var(--accent-color);
-            }
-            50% {
-                background-color: #e11d48;
-            }
-        }
-        
-        @keyframes pulseBorder {
-            0%, 100% {
-                border-color: var(--error);
-            }
-            50% {
-                border-color: rgba(239, 68, 68, 0.5);
-            }
-        }
-        
-        /* התאמה למובייל */
         @media (max-width: 768px) {
             .container {
-                padding: 25px 15px;
+                padding: 20px 15px;
                 width: 95%;
             }
             
@@ -380,12 +174,8 @@
                 font-size: 1.8rem;
             }
             
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            
             p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
             
             .teams-grid {
@@ -397,6 +187,98 @@
                 margin: 10px auto 20px;
                 display: inline-block;
             }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <h1>חלוקה לצוותי פעולה</h1>
+        <div class="subtitle">מבצע ביצת הפתעה 2</div>
+        
+        <div class="mission-brief">
+            <p>
+                עדכון משרד המבצעים, שעה <span class="highlight">08:30</span>:
+            </p>
+            <p>
+                כל הכבוד על התקדמותכם עד כה. ניתוח המידע שאספתם מצביע על כך שהסגל יצא מהבסיס למשימה סודית בארבעה מוקדים שונים ברחבי האזור. עלינו להתארגן ולצאת בעקבותיהם.
+            </p>
+            <p>
+                לטובת משימה זו, חניכי מחזור <span class="highlight">40</span> יתחלקו לארבעה צוותי פעולה. כל צוות יקבל משימה ייחודית וייצא לאתר את אנשי הסגל במוקד המיועד לו.
+            </p>
+        </div>
+        
+        <div class="alert-box">
+            <div class="alert-title">הנחיות חשובות</div>
+            <p>
+                כל צוות יתארגן וייגש לרכב המיועד לו. ברכב, לחצו על הכפתור "קבל משימה" כדי לקבל את הפרטים הייחודיים למשימתכם.
+            </p>
+        </div>
+        
+        <div class="teams-grid">
+            <div class="team-card">
+                <div class="team-name">צוות גוטליב</div>
+                <div class="team-description">
+                    אחראים לחיפוש בתחום הצפוני של הבסיס.
+                </div>
+            </div>
             
-            .button {
-                padding: 12px
+            <div class="team-card">
+                <div class="team-name">צוות נחמיאס</div>
+                <div class="team-description">
+                    אחראים לחיפוש בתחום המזרחי של הבסיס.
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-name">צוות כחלון</div>
+                <div class="team-description">
+                    אחראים לחיפוש בתחום הדרומי של הבסיס.
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-name">צוות לרון</div>
+                <div class="team-description">
+                    אחראים לחיפוש בתחום המערבי של הבסיס.
+                </div>
+            </div>
+        </div>
+        
+        <div class="continue-section">
+            <div class="continue-message">
+                חברו לצוותכם, גשו לרכב המיועד ולחצו על הכפתור הבא לקבלת המשימה הייעודית.
+            </div>
+            <button class="button" id="continueButton">קבל משימה</button>
+        </div>
+    </div>
+
+    <script>
+        // ניהול הספירה לאחור
+        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // התחלת ספירה לאחור מיד
+        updateCountdown();
+        
+        // המשך למשימה הבאה
+        document.getElementById('continueButton').addEventListener('click', function() {
+            // כאן יש לשנות את הנתיב לפי המשימה הבאה
+            window.location.href = 'next-mission.html';
+        });
+    </script>
+</body>
+</html>
