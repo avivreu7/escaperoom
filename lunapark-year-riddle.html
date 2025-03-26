@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חידת הלונה פארק - שנת הפתיחה</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #111827;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #f8fafc;
+            text-align: center;
+        }
+        
+        .mission-brief {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-right: 3px solid #3b82f6;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        
+        .highlight {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        /* חלק החידה */
+        .riddle-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .riddle-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .riddle-title {
+            font-size: 1.3rem;
+            color: #f43f5e;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .riddle-icon {
+            font-size: 1.8rem;
+            margin-left: 10px;
+        }
+        
+        .riddle-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #f8fafc;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* איזור הקלט */
+        .input-area {
+            background-color: rgba(30, 41, 59, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .input-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #f8fafc;
+        }
+        
+        .input-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .input-field {
+            width: 80%;
+            max-width: 300px;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            color: #f8fafc;
+            text-align: center;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #f43f5e;
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+        }
+        
+        .submit-button {
+            background-color: #3b82f6;
+            border: none;
+            color: #f8fafc;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background-color: #f43f5e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feedback {
+            min-height: 1.5em;
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .feedback.error {
+            color: #ef4444;
+        }
+        
+        .feedback.success {
+            color: #10b981;
+        }
+        
+        /* רמזים נוספים */
+        .hint-button {
+            background-color: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .hint-button:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .hint-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .hint-panel.visible {
+            max-height: 500px;
+            padding: 15px;
+        }
+        
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #f43f5e;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            color: #f43f5e;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+            z-index: 100;
+        }
+        
+        /* התאמה למסכים קטנים */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .countdown {
+                position: static;
+                margin: 10px auto 20px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <h1>הרמז בלונה פארק</h1>
+        
+        <div class="mission-brief">
+            <p>
+                <span class="highlight">עדכון מרכז המבצעים:</span> מצוין, הגעתם ללונה פארק! 
+            </p>
+            <p>
+                אחד מאנשי הסגל השאיר הודעה מוצפנת המובילה למיקום הבא. נראה שהעבר של המקום מכיל את המפתח להמשך.
+            </p>
+        </div>
+        
+        <div class="riddle-container">
+            <div class="riddle-header">
+                <div class="riddle-icon">🔍</div>
+                <div class="riddle-title">החידה:</div>
+            </div>
+            
+            <div class="riddle-text">
+                בשנה שבה הצחוק הראשון נשמע במקום הזה,<br>
+                ניקסון היה נשיא, הביטלס התפרקו לפתע.<br>
+                כשאנשים לראשונה הביטו בגלגל הענק,<br>
+                היה זה עשור הדיסקו והמוזיקה הקצבית.<br><br>
+                
+                הקיפו סביב עשר פעמים,<br>
+                והתוצאה תוביל אתכם למספר החדרים.<br><br>
+                
+                מהו המספר?
+            </div>
+        </div>
+        
+        <div class="input-area">
+            <div class="input-title">הזינו את התשובה:</div>
+            
+            <div class="input-form">
+                <input type="number" class="input-field" id="answerInput" placeholder="הקלידו את המספר">
+                <button class="submit-button" id="submitButton">שלח תשובה</button>
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <button class="hint-button" id="hintButton">זקוקים לרמז?</button>
+            
+            <div class="hint-panel" id="hintPanel">
+                <p>רמז 1: החידה מרמזת על שנה מסוימת בהיסטוריה.</p>
+                <p>רמז 2: ריצ'רד ניקסון היה נשיא ארה"ב בשנים 1969-1974.</p>
+                <p>רמז 3: הביטלס התפרקו רשמית בשנת 1970.</p>
+                <p>רמז 4: "הקיפו סביב עשר פעמים" - מה קורה כשמכפילים את המספר ב-10?</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ניהול הספירה לאחור
+        let timeLeft = 2 * 60 * 60; // 2 שעות בשניות
+        const countdownElement = document.getElementById('countdown');
+        
+        function updateCountdown() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // התחלת ספירה לאחור מיד
+        updateCountdown();
+        
+        // לוגיקת החידה
+        document.getElementById('submitButton').addEventListener('click', function() {
+            checkAnswer();
+        });
+        
+        document.getElementById('answerInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
+        document.getElementById('hintButton').addEventListener('click', function() {
+            const hintPanel = document.getElementById('hintPanel');
+            hintPanel.classList.toggle('visible');
+            
+            if (hintPanel.classList.contains('visible')) {
+                this.textContent = 'הסתר רמזים';
+            } else {
+                this.textContent = 'זקוקים לרמז?';
+            }
+        });
+        
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answerInput').value.trim();
+            const feedback = document.getElementById('feedback');
+            
+            if (userAnswer === '') {
+                feedback.textContent = 'אנא הכניסו תשובה';
+                feedback.className = 'feedback error';
+                return;
+            }
+            
+            // התשובה הנכונה היא 1970 או 19700
+            if (userAnswer === '1970' || userAnswer === '19700') {
+                feedback.textContent = 'תשובה נכונה! מעבר לשלב הבא...';
+                feedback.className = 'feedback success';
+                
+                // מעבר לדף הבא אחרי השהייה
+                setTimeout(() => {
+                    window.location.href = 'safari-clue.html'; // שם הדף הבא
+                }, 2000);
+            } else {
+                feedback.textContent = 'תשובה שגויה, נסו שוב';
+                feedback.className = 'feedback error';
+                
+                const inputElement = document.getElementById('answerInput');
+                inputElement.classList.add('shake');
+                setTimeout(() => {
+                    inputElement.classList.remove('shake');
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>
