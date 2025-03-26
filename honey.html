@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חלב ודבש - החידה הבאה</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&family=Rubik:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Rubik', 'Heebo', sans-serif;
+            background-color: #111827;
+            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.2) 0%, transparent 70%),
+                radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        /* הוספת אפקט של גריד עדין ברקע */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #1e293b;
+            border-radius: 16px;
+            padding: 40px 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* קישוט בקצה העליון */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #f7b733, #fc4a1a, #f7b733, transparent);
+            box-shadow: 0 0 20px rgba(247, 183, 51, 0.6);
+        }
+        
+        /* רקע מדורג לאלמנט המרכזי */
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(247, 183, 51, 0.08), transparent 70%),
+                        radial-gradient(circle at 70% 60%, rgba(252, 74, 26, 0.08), transparent 70%);
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #f8fafc;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            text-shadow: 0 0 15px rgba(247, 183, 51, 0.5);
+        }
+        
+        /* קישוט תחת הכותרת */
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #f7b733, transparent);
+            border-radius: 3px;
+        }
+        
+        .success-message {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: glowSuccess 3s infinite alternate;
+        }
+        
+        .success-icon {
+            font-size: 3rem;
+            color: #10b981;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            text-align: center;
+            margin: 15px 0 40px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .riddle-container {
+            background-color: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .riddle-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .riddle-title {
+            font-size: 1.5rem;
+            color: #f7b733;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .riddle-icon {
+            font-size: 2rem;
+            color: #f7b733;
+            margin-left: 15px;
+        }
+        
+        .riddle-text {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .riddle-text p {
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            color: #f7b733;
+            font-weight: 600;
+            text-shadow: 0 0 5px rgba(247, 183, 51, 0.3);
+            padding: 0 3px;
+        }
+        
+        /* אזור הרמז */
+        .hint-section {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .hint-button {
+            background-color: transparent;
+            color: #f8fafc;
+            border: 2px solid #fc4a1a;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .hint-button:hover {
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(252, 74, 26, 0.3);
+        }
+        
+        .hint-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(252, 74, 26, 0.2);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .hint-button:hover::before {
+            width: 100%;
+        }
+        
+        .hint-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, margin 0.5s ease, padding 0.5s ease;
+            background-color: rgba(15, 23, 42, 0.8);
+            border-radius: 8px;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        
+        .hint-content.visible {
+            max-height: 300px;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid rgba(252, 74, 26, 0.3);
+        }
+        
+        .hint-text {
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .hint-icon {
+            font-size: 1.8rem;
+            color: #fc4a1a;
+        }
+        
+        /* אפקטים דקורטיביים */
+        .decoration {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: -1;
+        }
+        
+        .milk-drop {
+            width: 40px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 60px;
+            left: 20px;
+            transform: rotate(-30deg);
+            filter: blur(3px);
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        .honey-drop {
+            width: 35px;
+            height: 50px;
+            background-color: rgba(247, 183, 51, 0.6);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            bottom: 80px;
+            right: 30px;
+            transform: rotate(30deg);
+            filter: blur(3px);
+            animation: float 5s infinite ease-in-out reverse;
+        }
+        
+        .countdown {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #fc4a1a;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            color: #fc4a1a;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(252, 74, 26, 0.3);
+            z-index: 100;
+        }
+        
+        /* אנימציות */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(-30deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(-25deg);
+            }
+        }
+        
+        @keyframes glowSuccess {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            }
+        }
+        
+        /* התאמות למובייל */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .riddle-text {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+            
+            .countdown {
+                position: static;
+                margin: 10px auto 20px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration milk-drop"></div>
+    <div class="decoration honey-drop"></div>
+    <div class="countdown" id="countdown">02:00:00</div>
+    
+    <div class="container">
+        <h1>חלב ודבש</h1>
+        <div class="subtitle">המסע עוד לא הסתיים...</div>
+        
+        <div class="success-message">
+            <div class="success-icon">🎭</div>
+            <p style="font-size: 1.3rem; color: #f8fafc;">כל הכבוד! ההצטלמות שלכם התקבלה בהצלחה!</p>
+        </div>
+        
+        <div class="riddle-container">
+            <div class="riddle-header">
+                <div class="riddle-icon">🔍</div>
+                <div class="riddle-title">החידה הבאה:</div>
+            </div>
+            
+            <div class="riddle-text">
+                <p>
+                    <span class="highlight">במהלך הדרך פתרתם חידות וחשפתם סודות.</span> אבל כדי להבין את השלב הבא – צריך לחזור להתחלה... לא של היום, אלא של התרבות.
+                </p>
+                <p>
+                    חפשו מקום שבו קסם נוצר ממים, דגן, ודיוק של מדע. מעבדה של טעמים, בוערת בשקט.
+                </p>
+                <p>
+                    המקום פתוח רק למי שיודע לחשוב אחרת, ושם – <span class="highlight">חלב ודבש נפגשים</span>.
+                </p>
+            </div>
+        </div>
+        
+        <div class="hint-section">
+            <button class="hint-button" id="hintButton">רוצים רמז?</button>
+            <div class="hint-content" id="hintContent">
+                <div class="hint-text">
+                    <span class="hint-icon">🗺️</span>
+                    תפתחו מפות וחפשו בקרבתכם
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ניהול הספ
