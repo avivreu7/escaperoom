@@ -271,8 +271,7 @@
                 כשאנשים לראשונה הביטו בגלגל הענק,<br>
                 היה זה עשור הדיסקו והמוזיקה הקצבית.<br><br>
                 
-                הקיפו סביב עשר פעמים,<br>
-                והתוצאה תוביל אתכם למספר החדרים.<br><br>
+
                 
                 מהו המספר?
             </div>
@@ -288,14 +287,7 @@
             
             <div class="feedback" id="feedback"></div>
             
-            <button class="hint-button" id="hintButton">זקוקים לרמז?</button>
-            
-            <div class="hint-panel" id="hintPanel">
-                <p>רמז 1: החידה מרמזת על שנה מסוימת בהיסטוריה.</p>
-                <p>רמז 2: ריצ'רד ניקסון היה נשיא ארה"ב בשנים 1969-1974.</p>
-                <p>רמז 3: הביטלס התפרקו רשמית בשנת 1970.</p>
-                <p>רמז 4: "הקיפו סביב עשר פעמים" - מה קורה כשמכפילים את המספר ב-10?</p>
-            </div>
+
         </div>
     </div>
 
@@ -330,16 +322,7 @@
             }
         });
         
-        document.getElementById('hintButton').addEventListener('click', function() {
-            const hintPanel = document.getElementById('hintPanel');
-            hintPanel.classList.toggle('visible');
-            
-            if (hintPanel.classList.contains('visible')) {
-                this.textContent = 'הסתר רמזים';
-            } else {
-                this.textContent = 'זקוקים לרמז?';
-            }
-        });
+        // קוד הרמזים הוסר
         
         function checkAnswer() {
             const userAnswer = document.getElementById('answerInput').value.trim();
